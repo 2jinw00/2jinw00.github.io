@@ -20,6 +20,17 @@
         }
         nav a {
             color: #6ccad0;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .nav-left, .nav-right {
+            display: flex;
         }
         .date {
             font-family: 'Consolas', monospace;
@@ -32,18 +43,14 @@
 <body>
     <nav class="nav">
         <div class="nav-left">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/publications">Publications</a></li>
-                <li><a href="http://acss.kaist.ac.kr/">Research</a></li>
-                <li><a href="/teaching">Teaching</a></li>
-            </ul>
+            <a href="/">Home</a>
+            <a href="/publications">Publications</a>
+            <a href="http://acss.kaist.ac.kr/">Research</a>
+            <a href="/teaching">Teaching</a>
         </div>
         <div class="nav-right">
-            <ul>
-                <li><a href="/bio">Bio</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
+            <a href="/bio">Bio</a>
+            <a href="/contact">Contact</a>
         </div>
     </nav>
 
