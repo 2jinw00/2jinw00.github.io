@@ -1,34 +1,34 @@
-/* ✅ 쿠키런 폰트 (본문용) */
+/* ✅ 폰트 설정 */
 @font-face {
   font-family: 'CookieRun';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
   font-weight: normal;
   font-display: swap;
 }
-
-/* ✅ Raleway 폰트 (이름 / footer용) */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
 
+/* ✅ 전체 구조 */
 body {
   font-family: 'CookieRun', sans-serif;
   background-color: #fffefc;
   color: #222;
   margin: 0;
-  padding: 0;
+  padding: 0 80px; /* 오른쪽 여백 약간 */
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end; /* 오른쪽 정렬 핵심 */
+  text-align: right; /* 텍스트도 오른쪽 정렬 */
 }
 
+/* ✅ 상단 영역 */
 header {
-  text-align: center;
   margin-top: 40px;
 }
 
 header h1 {
-  font-family: 'Raleway', sans-serif; /* 이름은 Raleway */
+  font-family: 'Raleway', sans-serif;
   font-size: 2.2rem;
   margin-bottom: 0.3rem;
   letter-spacing: 1px;
@@ -40,87 +40,41 @@ header p {
   margin: 3px 0;
 }
 
+/* ✅ 메인 텍스트 */
 .main-text {
   font-size: 3rem;
-  text-align: center;
-  margin: auto;
   color: #111;
   letter-spacing: 2px;
   animation: fadeIn 2s ease-in-out;
 }
 
-/* 부드러운 등장 애니메이션 */
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
+/* ✅ 하단 */
 footer {
   margin-bottom: 40px;
-  font-family: 'Raleway', sans-serif; /* footer는 Raleway */
+  font-family: 'Raleway', sans-serif;
   font-size: 1rem;
 }
 
-footer a {
-  color: #555;
+/* ✅ 링크 스타일 */
+a {
+  color: #000;
   text-decoration: none;
   margin: 0 8px;
   transition: color 0.2s;
 }
 
-footer a:hover {
+/* 마우스 올렸을 때 진한 회색 */
+a:hover {
+  color: #444;
+}
+
+/* 방문(visited) 색상도 동일하게 */
+a:visited {
   color: #000;
 }
 
-
-.book-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  margin: 40px auto;
-  max-width: 900px;
-}
-
-.book-card {
-  background-color: #fff;
-  border: 2px solid #eee;
-  border-radius: 12px;
-  width: 250px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.book-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-.book-card img {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.book-card h2 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.book-card p {
-  font-size: 0.95rem;
-  color: #555;
-  margin-bottom: 12px;
-}
-
-.book-card a {
-  color: #333;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.book-card a:hover {
-  color: #000;
+/* ✅ 부드러운 등장 효과 */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
