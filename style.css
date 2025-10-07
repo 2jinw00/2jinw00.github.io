@@ -71,3 +71,56 @@ footer a {
 footer a:hover {
   color: #000;
 }
+
+
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin: 40px auto;
+  max-width: 900px;
+}
+
+.book-card {
+  background-color: #fff;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  width: 250px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.book-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.book-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.book-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.book-card a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.book-card a:hover {
+  color: #000;
+}
