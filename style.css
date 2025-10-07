@@ -13,63 +13,88 @@ body {
   background-color: #fffefc;
   color: #222;
   margin: 0;
-  padding: 0 80px; /* 오른쪽 여백 약간 */
+  padding: 0 80px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-end; /* 오른쪽 정렬 핵심 */
-  text-align: right; /* 텍스트도 오른쪽 정렬 */
 }
 
-/* ✅ 상단 영역 */
+/* ✅ 상단 메뉴 */
+nav {
+  font-family: 'Raleway', sans-serif;
+  text-align: right;
+  font-size: 0.95rem;
+  margin-top: 20px; /* 이름 소개와의 간격 최소화 */
+  margin-bottom: 0;
+}
+
+nav a {
+  color: #000;
+  text-decoration: none;
+  margin: 0 6px;
+  transition: color 0.2s;
+}
+nav a:hover {
+  color: #444;
+}
+nav a:visited {
+  color: #000;
+}
+
+/* ✅ 이름 + 소개 */
 header {
-  margin-top: 40px;
+  text-align: left;
+  margin-top: 0; /* 메뉴와 간격 제거 */
 }
 
 header h1 {
   font-family: 'Raleway', sans-serif;
   font-size: 2.2rem;
-  margin-bottom: 0.3rem;
-  letter-spacing: 1px;
+  margin: 10px 0 4px 0;
 }
 
 header p {
   font-size: 1rem;
   color: #555;
-  margin: 3px 0;
+  margin: 0;
 }
 
-/* ✅ 메인 텍스트 */
+/* ✅ 중앙 문구 */
+main {
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .main-text {
   font-size: 3rem;
+  font-weight: bold;
   color: #111;
   letter-spacing: 2px;
   animation: fadeIn 2s ease-in-out;
 }
 
-/* ✅ 하단 */
+/* ✅ footer */
 footer {
-  margin-bottom: 40px;
   font-family: 'Raleway', sans-serif;
+  text-align: center;
   font-size: 1rem;
+  margin-bottom: 30px;
 }
 
-/* ✅ 링크 스타일 */
-a {
+footer a {
   color: #000;
   text-decoration: none;
-  margin: 0 8px;
+  margin: 0 10px;
   transition: color 0.2s;
 }
-
-/* 마우스 올렸을 때 진한 회색 */
-a:hover {
+footer a:hover {
   color: #444;
 }
-
-/* 방문(visited) 색상도 동일하게 */
-a:visited {
+footer a:visited {
   color: #000;
 }
 
