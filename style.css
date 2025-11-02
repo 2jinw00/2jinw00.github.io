@@ -103,3 +103,52 @@ footer a:visited {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+
+/* 🎮 Game Player 페이지용 */
+.game-header {
+  text-align: center;
+  margin-top: 80px;
+}
+
+.game-header h1 {
+  font-family: 'Raleway', sans-serif;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.game-header p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.pokemon-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.pokemon {
+  text-align: center;
+}
+
+.pokemon img {
+  width: 160px;
+  height: 160px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.pokemon img:hover {
+  transform: scale(1.05);
+}
+
+.pokemon p {
+  font-family: 'CookieRun', sans-serif;
+  margin-top: 10px;
+  font-size: 1.1rem;
+}
