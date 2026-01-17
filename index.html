@@ -64,7 +64,7 @@
 
     /* [메인 레이아웃] */
     main.wrap {
-      max-width: 1100px; /* 좌우 분할이라 폭을 조금 넓힘 */
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 20px 80px;
     }
@@ -72,26 +72,22 @@
     .intro-text { text-align: center; margin-bottom: 4rem; }
     .intro-text h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
 
-    /* =========================================
-       [좌우 분할 타임라인 스타일]
-       ========================================= */
+    /* [타임라인 섹션] */
     .timeline-section {
       display: flex;
       flex-direction: column;
-      gap: 60px; /* 그룹 간 간격 */
+      gap: 60px;
     }
 
-    /* 하나의 교육 기간 블록 (Flexbox) */
     .edu-block {
       display: flex;
       width: 100%;
-      /* 좌/우측 중 더 긴 쪽에 맞춰 높이가 늘어남 */
       align-items: stretch; 
     }
 
-    /* [1. 왼쪽 구역: 학위/전공 정보] */
+    /* [1. 왼쪽 구역] */
     .left-col {
-      flex: 1; /* 가변 너비 */
+      flex: 1;
       text-align: right;
       padding-right: 30px;
       padding-top: 10px;
@@ -107,12 +103,10 @@
     .ksa-text { color: var(--ksa-blue); }
 
     .full-name {
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: #888;
       font-weight: 500;
       margin-bottom: 10px;
-      display: inline-block;
-      padding-bottom: 2px;
     }
     
     .period-main {
@@ -125,7 +119,6 @@
       padding-bottom: 2px;
     }
 
-    /* 학위 상세 목록 */
     .degree-list {
       list-style: none;
       font-size: 0.95rem;
@@ -133,47 +126,36 @@
     }
     .degree-list li {
       margin-bottom: 6px;
-      position: relative;
     }
-    .degree-list li strong {
-        display: block;
-        color: #222;
-        font-size: 1rem;
-        margin-bottom: 2px;
-    }
-    /* 중요 전공 강조 */
     .degree-highlight {
       font-weight: bold;
       color: #333;
     }
 
-
-    /* [2. 중앙: 굵은 Bar] */
+    /* [2. 중앙 Bar] */
     .bar-container {
-      width: 40px; /* Bar 영역 너비 */
+      width: 40px;
       flex-shrink: 0;
       display: flex;
       justify-content: center;
     }
     
     .thick-bar {
-      width: 20px; /* 실제 색칠되는 Bar 두께 */
+      width: 20px;
       border-radius: 10px;
-      height: 100%; /* 부모 높이에 꽉 참 */
-      min-height: 150px; /* 내용이 없어도 최소 이만큼은 보임 */
+      height: 100%;
+      min-height: 150px;
     }
     .bar-kaist { background-color: var(--kaist-blue); opacity: 0.9; }
     .bar-ksa { background-color: var(--ksa-blue); opacity: 0.9; }
 
-
-    /* [3. 오른쪽 구역: 연구/활동 정보] */
+    /* [3. 오른쪽 구역] */
     .right-col {
-      flex: 1; /* 가변 너비 */
+      flex: 1;
       padding-left: 30px;
-      padding-top: 15px; /* 왼쪽 제목과 시각적 높이 맞춤 */
+      padding-top: 15px;
     }
 
-    /* 오른쪽 섹션 제목 (Research Experience) */
     .section-header {
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -182,16 +164,19 @@
       margin-bottom: 15px;
       font-weight: 700;
     }
+    
+    /* 섹션 간 간격 추가 (Research <-> Campus Service) */
+    .section-spacer {
+        margin-top: 50px;
+    }
 
-    /* 활동 아이템 */
     .activity-item {
       margin-bottom: 30px;
       position: relative;
-      padding-left: 20px; /* 세로 선 공간 확보 */
+      padding-left: 20px;
     }
     .activity-item:last-child { margin-bottom: 0; }
 
-    /* 왼쪽에 얇은 선 (타임라인 느낌 보조) */
     .activity-item::before {
       content: '';
       position: absolute;
@@ -202,9 +187,7 @@
       background-color: #eee;
       border-radius: 2px;
     }
-    /* KAIST 내부 활동 선 색상 */
     .kaist-group .activity-item::before { background-color: rgba(1, 67, 143, 0.3); }
-    /* 강조 아이템 (최신) */
     .highlight-item::before { background-color: var(--kaist-blue); width: 4px; }
 
     .period-badge {
@@ -241,28 +224,23 @@
     footer a { color: #fff; margin: 0 10px; opacity: 0.7; }
     footer a:hover { opacity: 1; text-decoration: underline; }
 
-    /* [모바일 반응형] - 좁은 화면에서는 위아래로 쌓음 */
+    /* [모바일 반응형] */
     @media (max-width: 768px) {
       .edu-block { flex-direction: column; }
       
-      /* 왼쪽(상단) 정보 모바일 스타일 */
       .left-col { 
         text-align: left; 
         padding-right: 0; 
         padding-left: 20px;
-        border-left: 5px solid #eee; /* 모바일용 약식 Bar */
+        border-left: 5px solid #eee;
         margin-left: 10px;
         margin-bottom: 20px;
       }
       .kaist-group .left-col { border-left-color: var(--kaist-blue); }
       .ksa-group .left-col { border-left-color: var(--ksa-blue); }
 
-      /* 중앙 Bar는 모바일에서 숨김 (공간 절약) */
       .bar-container { display: none; }
-
-      /* 오른쪽(하단) 정보 모바일 스타일 */
       .right-col { padding-left: 20px; }
-      
       .org-name { font-size: 1.5rem; }
     }
   </style>
@@ -312,6 +290,7 @@
         </div>
 
         <div class="right-col">
+          
           <div class="section-header">Research Experience</div>
 
           <div class="activity-item highlight-item">
@@ -331,35 +310,29 @@
             <div class="lab-name">Lab of Immunotherapy</div>
             <div class="lab-desc">Intern<br>@ Dept. of Biological Sciences</div>
           </div>
-        </div>
-
-          <div class="section-header">Campus Service</div>
+          
+          <div class="section-header section-spacer">Campus Service</div>
 
           <div class="activity-item">
             <span class="period-badge">2025</span>
             <div class="lab-name">36th Undergraduate Association 〈SPACE〉</div>
-            <div class="lab-desc">President<br>Hello</div>
+            <div class="lab-desc">President</div>
           </div>
 
           <div class="activity-item">
             <span class="period-badge">2023 - 2024</span>
             <div class="lab-name">Student Culture & Space Committee</div>
-            <div class="lab-desc">Chairman<br>Hello</div>
+            <div class="lab-desc">Chairman</div>
           </div>
 
-        <div class="bar-container">
-          <div class="thick-bar bar-kaist"></div>
-
-        
-      </div> <div class="edu-block ksa-group">
+        </div> </div> <div class="edu-block ksa-group">
         
         <div class="left-col">
           <div class="org-name ksa-text">KSA of KAIST</div>
           <div class="full-name">Korea Science Academy of KAIST</div>
-
           <div class="period-main">2020. Feb - 2023. Feb</div>
+          
           <div style="font-weight:bold;">High School Diploma</div>
-          <div style="font-size:0.9rem; color:#555;">Korea Science Academy of KAIST</div>
         </div>
         
         <div class="bar-container">
