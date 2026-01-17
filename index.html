@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jinwoo Lee - Portfolio</title>
+  <title>Jinwoo Lee - Home</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* [변수 설정] */
+    /* [공통 변수 - 다른 페이지와 동일] */
     :root {
       --kaist-blue: #01438F;
-      --ksa-blue: #1E2083;
       --text-main: #222;
       --text-sub: #555;
       --bg-color: #f9f9f9;
+      --card-bg: #fff;
+      --nav-hover: #eef4ff;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,29 +30,56 @@
     }
 
     a { text-decoration: none; color: inherit; transition: 0.3s; }
-    a:hover { color: var(--kaist-blue); }
-
+    
     /* [네비게이션] */
     nav {
       background: #fff;
-      padding: 1rem;
+      padding: 0;
       text-align: center;
       position: sticky;
       top: 0;
       z-index: 100;
       border-bottom: 1px solid #eee;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
-    nav a { margin: 0 15px; font-weight: 500; font-size: 0.95rem; }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a { 
+      display: inline-block;
+      padding: 1rem 1.2rem;
+      font-weight: 500; 
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    nav a:hover {
+      background-color: var(--nav-hover);
+      color: var(--kaist-blue);
+      font-weight: 700;
+    }
+
+    nav a.active {
+      color: var(--kaist-blue);
+      font-weight: 700;
+      border-bottom: 2px solid var(--kaist-blue);
+    }
 
     /* [헤더] */
     header.main-header {
       text-align: center;
       padding: 4rem 1rem 3rem;
       background: #fff;
-      margin-bottom: 3rem;
+      border-bottom: 1px solid #eee;
     }
-    header.main-header h1 { font-size: 2.8rem; margin-bottom: 0.5rem; letter-spacing: -1px; }
-    header.main-header p { color: #666; font-size: 0.95rem; margin-bottom: 1rem; }
+    header.main-header h1 { font-size: 3rem; margin-bottom: 0.5rem; letter-spacing: -1.5px; }
+    header.main-header p { color: #666; font-size: 1.1rem; margin-bottom: 1rem; }
     .tag-pill {
       display: inline-block;
       padding: 5px 15px;
@@ -64,153 +92,78 @@
 
     /* [메인 레이아웃] */
     main.wrap {
-      max-width: 1100px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 0 20px 80px;
+      padding: 60px 20px 80px;
     }
 
-    .intro-text { text-align: center; margin-bottom: 4rem; }
-    .intro-text h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    /* [소개 섹션] */
+    .intro-section {
+      margin-bottom: 60px;
+      text-align: center;
+    }
+    .intro-section p {
+      font-size: 1.1rem;
+      color: #444;
+      max-width: 700px;
+      margin: 0 auto 20px;
+      word-break: keep-all;
+    }
 
-    /* [타임라인 섹션] */
-    .timeline-section {
+    /* [메뉴 카드 그리드] */
+    .grid-menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .menu-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border: 1px solid transparent;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
       display: flex;
       flex-direction: column;
-      gap: 60px;
-    }
-
-    .edu-block {
-      display: flex;
-      width: 100%;
-      align-items: stretch; 
-    }
-
-    /* [1. 왼쪽 구역] */
-    .left-col {
-      flex: 1;
-      text-align: right;
-      padding-right: 30px;
-      padding-top: 10px;
-    }
-
-    .org-name {
-      font-size: 1.8rem;
-      font-weight: 900;
-      line-height: 1.2;
-      margin-bottom: 5px;
-    }
-    .kaist-text { color: var(--kaist-blue); }
-    .ksa-text { color: var(--ksa-blue); }
-
-    .full-name {
-      font-size: 0.9rem;
-      color: #888;
-      font-weight: 500;
-      margin-bottom: 10px;
-    }
-    
-    .period-main {
-      font-size: 1rem;
-      color: #888;
-      font-weight: 500;
-      margin-bottom: 20px;
-      display: inline-block;
-      border-bottom: 2px solid #eee;
-      padding-bottom: 2px;
-    }
-
-    .degree-list {
-      list-style: none;
-      font-size: 0.95rem;
-      color: #444;
-    }
-    .degree-list li {
-      margin-bottom: 6px;
-    }
-    .degree-highlight {
-      font-weight: bold;
-      color: #333;
-    }
-
-    /* [2. 중앙 Bar] */
-    .bar-container {
-      width: 40px;
-      flex-shrink: 0;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .thick-bar {
-      width: 20px;
-      border-radius: 10px;
+      justify-content: space-between;
       height: 100%;
-      min-height: 150px;
-    }
-    .bar-kaist { background-color: var(--kaist-blue); opacity: 0.9; }
-    .bar-ksa { background-color: var(--ksa-blue); opacity: 0.9; }
-
-    /* [3. 오른쪽 구역] */
-    .right-col {
-      flex: 1;
-      padding-left: 30px;
-      padding-top: 15px;
     }
 
-    .section-header {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #999;
-      margin-bottom: 15px;
+    .menu-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(1, 67, 143, 0.3);
+      box-shadow: 0 8px 25px rgba(1, 67, 143, 0.15);
+    }
+
+    .menu-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: var(--kaist-blue);
       font-weight: 700;
     }
     
-    /* 섹션 간 간격 추가 (Research <-> Campus Service) */
-    .section-spacer {
-        margin-top: 50px;
-    }
-
-    .activity-item {
-      margin-bottom: 30px;
-      position: relative;
-      padding-left: 20px;
-    }
-    .activity-item:last-child { margin-bottom: 0; }
-
-    .activity-item::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 5px;
-      bottom: 5px;
-      width: 3px;
-      background-color: #eee;
-      border-radius: 2px;
-    }
-    .kaist-group .activity-item::before { background-color: rgba(1, 67, 143, 0.3); }
-    .highlight-item::before { background-color: var(--kaist-blue); width: 4px; }
-
-    .period-badge {
-      display: inline-block;
-      font-size: 0.8rem;
+    .menu-card p {
+      font-size: 0.95rem;
       color: #666;
-      margin-bottom: 4px;
-      background: #f0f0f0;
-      padding: 2px 8px;
-      border-radius: 4px;
+      margin-bottom: 20px;
+      line-height: 1.5;
     }
-    
-    .lab-name {
-      font-size: 1.15rem;
+
+    .menu-link {
       font-weight: 700;
       color: #222;
-      margin-bottom: 4px;
+      display: inline-flex;
+      align-items: center;
+      margin-top: auto; /* 하단 고정 */
     }
-    .highlight-item .lab-name { color: var(--kaist-blue); }
-    
-    .lab-desc {
-      font-size: 0.95rem;
-      color: #555;
+    .menu-link::after {
+      content: '→';
+      margin-left: 5px;
+      transition: margin-left 0.2s;
+    }
+    .menu-card:hover .menu-link::after {
+      margin-left: 10px;
     }
 
     /* [푸터] */
@@ -224,158 +177,91 @@
     footer a { color: #fff; margin: 0 10px; opacity: 0.7; }
     footer a:hover { opacity: 1; text-decoration: underline; }
 
-    /* [모바일 반응형] */
+    /* 반응형 */
     @media (max-width: 768px) {
-      .edu-block { flex-direction: column; }
-      
-      .left-col { 
-        text-align: left; 
-        padding-right: 0; 
-        padding-left: 20px;
-        border-left: 5px solid #eee;
-        margin-left: 10px;
-        margin-bottom: 20px;
-      }
-      .kaist-group .left-col { border-left-color: var(--kaist-blue); }
-      .ksa-group .left-col { border-left-color: var(--ksa-blue); }
-
-      .bar-container { display: none; }
-      .right-col { padding-left: 20px; }
-      .org-name { font-size: 1.5rem; }
+      header.main-header h1 { font-size: 2.2rem; }
+      .nav-container { padding: 0 10px; }
+      nav a { padding: 0.8rem 0.6rem; font-size: 0.85rem; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="index.html">Home</a> |
-    <a href="bookreview.html">Projects</a> |
-    <a href="gameplayer.html">Activities</a>
+    <div class="nav-container">
+      <a href="index.html" class="active">Main</a>
+      <a href="vitae.html">Vitae</a>
+      <a href="publicus.html">Publicus</a>
+      <a href="lectio.html">Lectio</a>
+      <a href="ludus.html">Ludus</a>
+      <a href="recordum.html">Recordum</a>
+    </div>
   </nav>
 
   <header class="main-header">
     <h1>Jinwoo Lee</h1>
-    <p>Biological Sciences | Transdisciplinary Studies | AI | STP | CT</p>
+    <p>Exploring the Intersection of Biology, AI, and Society</p>
     <span class="tag-pill">@ KAIST</span>
   </header>
 
   <main class="wrap">
     
-    <section class="intro-text">
-      <h2 class="main-text">Curriculum Vitae</h2>
-      <p style="color:#777;">Education &amp; Research Experience</p>
+    <section class="intro-section">
+      <p>
+        안녕하세요, <strong>KAIST 생명과학과 이진우</strong>입니다.<br>
+        과학기술과 인문사회학의 접점에서 새로운 가치를 고민합니다.
+      </p>
+      <p style="font-size: 0.95rem; color: #777; margin-top: 10px;">
+        Studying Biological Sciences &amp; Transdisciplinary Studies.<br>
+        Interested in AI Applications, Bio-Ethics, and Science Policy.
+      </p>
     </section>
 
-    <div class="timeline-section">
-
-      <div class="edu-block kaist-group">
-        
-        <div class="left-col">
-          <div class="org-name kaist-text">Undergraduate, KAIST</div>
-          <div class="full-name">Korea Advanced Institute of Science and Technology</div>
-          <div class="period-main">2023. Feb - Current</div>
-          
-          <ul class="degree-list">
-            <li>Major in <span class="degree-highlight">Biological Sciences</span></li>
-            <li>Double Major in <span class="degree-highlight">Transdisciplinary Studies</span></li>
-            <li>Special Designated Major in <span class="degree-highlight">AI</span></li>
-            <li style="margin-top:8px; font-size: 0.9rem; color:#666;">
-               Minor in STP &amp; Culture Technology
-            </li>
-          </ul>
+    <div class="grid-menu">
+      
+      <a href="vitae.html" class="menu-card">
+        <div>
+          <h3>Vitae</h3>
+          <p>저의 학업 과정과 연구 경력, 그리고 다양한 활동의 발자취를 타임라인으로 정리했습니다.</p>
         </div>
-        
-        <div class="bar-container">
-          <div class="thick-bar bar-kaist"></div>
+        <span class="menu-link">View CV</span>
+      </a>
+
+      <a href="publicus.html" class="menu-card">
+        <div>
+          <h3>Publicus</h3>
+          <p>기고문, 에세이, 출판물 등 대중과 소통한 글과 생각들을 모았습니다.</p>
         </div>
+        <span class="menu-link">Read Articles</span>
+      </a>
 
-        <div class="right-col">
-          
-          <div class="section-header">Research Experience</div>
-
-          <div class="activity-item highlight-item">
-            <span class="period-badge">2025. Sep - 2026. Feb</span>
-            <div class="lab-name">Visual Neurodynamics Lab</div>
-            <div class="lab-desc">Undergraduate Intern<br>@ Dept. of Brain &amp; Cognitive Sciences</div>
-          </div>
-
-          <div class="activity-item">
-            <span class="period-badge">2024. Mar - 2025. Dec</span>
-            <div class="lab-name">Behavioral Intelligence Lab</div>
-            <div class="lab-desc">Undergraduate Intern<br>@ Dept. of Brain &amp; Cognitive Sciences</div>
-          </div>
-
-          
-          <div class="section-header section-spacer">External Activities</div>
-
-          <div class="activity-item">
-            <span class="period-badge">2024. Jun - 2024. Aug</span>
-            <div class="lab-name">Pediatric Psychiatry, Seoul Asan Medical Center</div>
-            <div class="lab-desc">Assistant Instructor of Social Skill Training Program</div>
-          </div>
-          
-          
-          <div class="section-header section-spacer">Campus Service</div>
-
-          <div class="activity-item">
-            <span class="period-badge">2025</span>
-            <div class="lab-name">36th Undergraduate Association〈SPACE〉</div>
-            <div class="lab-desc">President</div>
-          </div>
-
-          <div class="activity-item">
-            <span class="period-badge">2023 - 2024</span>
-            <div class="lab-name">Student Culture & Space Committee</div>
-            <div class="lab-desc">Chairman</div>
-          </div>
-          
-        </div> </div> <div class="edu-block ksa-group">
-        
-        <div class="left-col">
-          <div class="org-name ksa-text">KSA of KAIST</div>
-          <div class="full-name">Korea Science Academy of KAIST</div>
-          <div class="period-main">2020. Feb - 2023. Feb</div>
-          
-          <div style="font-weight:bold;">High School Diploma</div>
+      <a href="lectio.html" class="menu-card">
+        <div>
+          <h3>Lectio</h3>
+          <p>제가 공부하며 정리한 강의 노트와 발표 자료, 세미나 기록 아카이브입니다.</p>
         </div>
-        
-        <div class="bar-container">
-          <div class="thick-bar bar-ksa"></div>
+        <span class="menu-link">View Notes</span>
+      </a>
+
+      <a href="ludus.html" class="menu-card">
+        <div>
+          <h3>Ludus</h3>
+          <p>연구 외의 즐거움. 게임, 취미, 그리고 개인적인 프로젝트들에 대한 기록입니다.</p>
         </div>
+        <span class="menu-link">Explore Hobbies</span>
+      </a>
 
-        <div class="right-col">
-          <div class="section-header">Research Experience</div>
-
-          <div class="activity-item">
-            <span class="period-badge">2020. Mar - 2022. Dec</span>
-            <div class="lab-name">Lab of Molecular & Cell Biology</div>
-            <div class="lab-desc">Intern<br>@ Dept. of Chemistry & Biology, KSA</div>
-          </div>
-          
-          <div class="activity-item">
-            <span class="period-badge">2021. Jan - 2021. Dec</span>
-            <div class="lab-name">Lab of Immunotherapy</div>
-            <div class="lab-desc">Intern<br>@ Dept. of Biological Sciences, KAIST</div>
-          </div>
-
-
-          <div class="section-header section-spacer">Campus Service</div>
-
-          <div class="activity-item">
-            <span class="period-badge">2022</span>
-            <div class="lab-name">Korea Science Academy Science Festival Student Operating Committee</div>
-            <div class="lab-desc">Lead of Research Project Team</div>
-          </div>
-
-          <div class="activity-item">
-            <span class="period-badge">2022</span>
-            <div class="lab-name">Volunteer Group, KSA Strings</div>
-            <div class="lab-desc">Vice-President</div>
-          </div>
-
-        
+      <a href="recordum.html" class="menu-card">
+        <div>
+          <h3>Recordum</h3>
+          <p>순간의 기록들. 사진, 짧은 단상, 그리고 기억하고 싶은 장면들입니다.</p>
         </div>
-      </div> </div> </main>
+        <span class="menu-link">See Gallery</span>
+      </a>
+
+    </div>
+
+  </main>
 
   <footer>
     <div style="margin-bottom: 10px;">
