@@ -3,128 +3,294 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jinwoo Lee</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Jinwoo Lee - Portfolio</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* [기본 스타일 설정] */
+    :root {
+      --primary-color: #004191; /* KAIST Blue 느낌 */
+      --text-color: #333;
+      --bg-color: #f9f9f9;
+      --card-bg: #fff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+    }
+
+    a { text-decoration: none; color: inherit; transition: 0.3s; }
+    a:hover { color: var(--primary-color); }
+
+    /* [네비게이션] */
+    nav {
+      background: #fff;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav a { margin: 0 15px; font-weight: 500; }
+
+    /* [헤더 섹션] */
+    header.main-header {
+      text-align: center;
+      padding: 4rem 1rem;
+      background: #fff;
+      margin-bottom: 2rem;
+    }
+    header.main-header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: #222; }
+    header.main-header p { color: #666; max-width: 800px; margin: 0 auto; }
+    header.main-header .tags {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+
+    /* [메인 컨텐츠] */
+    main.wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    .intro-text {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .intro-text h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+
+    /* [타임라인 스타일] - 여기가 UI 핵심입니다 */
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    /* 타임라인 중앙 선 */
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      background-color: #ddd;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -2px;
+    }
+
+    .item {
+      padding: 10px 40px;
+      position: relative;
+      background-color: inherit;
+      width: 50%;
+    }
+
+    .item.left { left: 0; }
+    .item.right { left: 50%; }
+
+    /* 타임라인 점 */
+    .dot {
+      width: 20px;
+      height: 20px;
+      background-color: var(--primary-color);
+      border: 4px solid #fff;
+      position: absolute;
+      top: 20px;
+      border-radius: 50%;
+      z-index: 1;
+      box-shadow: 0 0 0 2px #ddd;
+    }
+    .item.left .dot { right: -10px; }
+    .item.right .dot { left: -10px; }
+
+    /* 카드 스타일 */
+    .card {
+      padding: 20px;
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .pill {
+      background: #eef4ff;
+      color: var(--primary-color);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+    .date { font-size: 0.85rem; color: #888; }
+    .role { font-size: 1.1rem; font-weight: bold; margin-bottom: 5px; }
+    .meta { font-size: 0.9rem; color: #666; margin-bottom: 8px; font-style: italic; }
+    .bullets { padding-left: 20px; font-size: 0.95rem; }
+    .bullets li { margin-bottom: 4px; }
+
+    /* [푸터] */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+    footer a { color: #fff; margin: 0 10px; text-decoration: underline; }
+    footer a:hover { color: #ddd; }
+
+    /* [모바일 반응형] 화면이 좁아지면 한 줄로 변경 */
+    @media screen and (max-width: 768px) {
+      .timeline::after { left: 31px; }
+      .item { width: 100%; padding-left: 70px; padding-right: 25px; }
+      .item.right { left: 0; }
+      .item.left::after, .item.right::after { left: 15px; }
+      
+      .item.left .dot, .item.right .dot {
+        left: 21px; /* 점 위치 조정 */
+        right: auto;
+      }
+      
+      header.main-header h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
 <body>
+
   <nav>
     <a href="index.html">Home</a> |
     <a href="bookreview.html">Projects</a> |
     <a href="gameplayer.html">Activities</a>
   </nav>
 
-  <header>
+  <header class="main-header">
     <h1>Jinwoo Lee</h1>
     <p>Biological Sciences | Transdisciplinary Studies | Science & Technology Policy | Culture Technology | Artificial Intelligence</p>
-    <p>@ KAIST</p>
+    <div class="tags">@ KAIST</div>
   </header>
 
-  <main>
-    <h2 class="main-text">이것저것 합니다</h2>
-  </main>
-
-<!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vitae</title>
-  <link rel="stylesheet" href="./style.css" />
-</head>
-<body>
   <main class="wrap">
-    <header class="page-head">
-      <h1>Vitae</h1>
-      <p class="sub">
-        <a href="./resume.pdf" target="_blank" rel="noopener">Full Resume in PDF</a>
-      </p>
-    </header>
-
-    <section class="timeline" aria-label="Vitae timeline">
-
-      <!-- Education (LEFT) -->
-      <div class="item left">
-        <span class="dot" aria-hidden="true"></span>
-        <article class="card">
-          <div class="card-top">
-            <span class="pill">Korea Science Academy of KAIST</span>
-            <span class="date">2020. Feb. - 2023. Feb.</span>
-          </div>
-          <div class="role">High School</div>
-          <ul class="bullets">
-            <li>Majorly Studied in Biology &amp; Astronomy</li>
-          </ul>
-        </article>
-      </div>
-
-      <div class="item left">
-        <span class="dot" aria-hidden="true"></span>
-        <article class="card">
-          <div class="card-top">
-            <span class="pill">Korea Advanced Institute of Science &amp; Technology</span>
-            <span class="date">2023. Feb. - Current</span>
-          </div>
-          <div class="role">Undergraduate</div>
-          <ul class="bullets">
-            <li>Major in Biological Sciences</li>
-            <li>Double Major in Transdisciplinary Studies</li>
-            <li>Special Designated Major in Artificial Intelligence</li>
-            <li>Minor in Science &amp; Technology Policy</li>
-            <li>Minor in Culture Technology</li>
-          </ul>
-        </article>
-      </div>
-
-      <!-- Affiliations (RIGHT) -->
-      <div class="item right">
-        <span class="dot" aria-hidden="true"></span>
-        <article class="card">
-          <div class="card-top">
-            <span class="pill">Lab of Immunotherapy</span>
-            <span class="date">2021. Jan. - 2021. Dec.</span>
-          </div>
-          <div class="role">Intern</div>
-          <div class="meta">@ Dept. of Biological Sciences, KAIST</div>
-        </article>
-      </div>
-
-      <div class="item right">
-        <span class="dot" aria-hidden="true"></span>
-        <article class="card">
-          <div class="card-top">
-            <span class="pill">Behavioral Intelligence Lab</span>
-            <span class="date">2024. Mar. - 2025. Dec.</span>
-          </div>
-          <div class="role">Undergraduate Intern</div>
-          <div class="meta">@ Dept. of Brain &amp; Cognitive Sciences, KAIST</div>
-        </article>
-      </div>
-
-      <div class="item right">
-        <span class="dot" aria-hidden="true"></span>
-        <article class="card">
-          <div class="card-top">
-            <span class="pill">Visual Neurodynamics Lab</span>
-            <span class="date">2025. Sep. - 2026. Feb.</span>
-          </div>
-          <div class="role">Undergraduate Intern</div>
-          <div class="meta">@ Dept. of Brain &amp; Cognitive Sciences, KAIST</div>
-        </article>
-      </div>
-
+    
+    <section class="intro-text">
+      <h2 class="main-text">이것저것 합니다</h2>
+      <p>관심 분야: AI, 바이오, 과학철학, 그리고 기술과 사회의 연결점</p>
     </section>
 
-    <footer class="foot">
-      <p class="muted">© Your Name</p>
-    </footer>
-  </main>
-</body>
-</html>
+    <section id="vitae">
+      <div class="section-title">
+        <h2>Vitae</h2>
+        <p style="font-size: 0.9rem;">
+          <a href="./resume.pdf" target="_blank" style="color: var(--primary-color);">Full Resume in PDF &rarr;</a>
+        </p>
+      </div>
 
-  
+      <div class="timeline" aria-label="Vitae timeline">
+
+        <div class="item left">
+          <span class="dot"></span>
+          <article class="card">
+            <div class="card-top">
+              <span class="pill">Education</span>
+              <span class="date">2020. Feb. - 2023. Feb.</span>
+            </div>
+            <div class="role">Korea Science Academy of KAIST</div>
+            <div class="meta">High School</div>
+            <ul class="bullets">
+              <li>Majorly Studied in Biology &amp; Astronomy</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="item left">
+          <span class="dot"></span>
+          <article class="card">
+            <div class="card-top">
+              <span class="pill">Education</span>
+              <span class="date">2023. Feb. - Current</span>
+            </div>
+            <div class="role">KAIST</div>
+            <div class="meta">Undergraduate</div>
+            <ul class="bullets">
+              <li>Major in Biological Sciences</li>
+              <li>Double Major in Transdisciplinary Studies</li>
+              <li>Special Designated Major in AI</li>
+              <li>Minor in STP &amp; Culture Technology</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="item right">
+          <span class="dot"></span>
+          <article class="card">
+            <div class="card-top">
+              <span class="pill">Research</span>
+              <span class="date">2021. Jan. - 2021. Dec.</span>
+            </div>
+            <div class="role">Lab of Immunotherapy</div>
+            <div class="meta">Intern @ Dept. of Biological Sciences, KAIST</div>
+          </article>
+        </div>
+
+        <div class="item right">
+          <span class="dot"></span>
+          <article class="card">
+            <div class="card-top">
+              <span class="pill">Research</span>
+              <span class="date">2024. Mar. - 2025. Dec.</span>
+            </div>
+            <div class="role">Behavioral Intelligence Lab</div>
+            <div class="meta">Undergraduate Intern @ Dept. of Brain &amp; Cognitive Sciences, KAIST</div>
+          </article>
+        </div>
+
+        <div class="item right">
+          <span class="dot"></span>
+          <article class="card">
+            <div class="card-top">
+              <span class="pill">Research</span>
+              <span class="date">2025. Sep. - 2026. Feb.</span>
+            </div>
+            <div class="role">Visual Neurodynamics Lab</div>
+            <div class="meta">Undergraduate Intern @ Dept. of Brain &amp; Cognitive Sciences, KAIST</div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
   <footer>
-    <a href="https://github.com/yourusername" target="_blank">GitHub</a> |
-    <a href="mailto:atoree@kaist.ac.kr">Email</a> |
-    <a href="https://www.instagram.com/2jinw0_0/">Instagram</a> 
+    <div style="margin-bottom: 10px;">
+      <a href="https://github.com/yourusername" target="_blank">GitHub</a> |
+      <a href="mailto:atoree@kaist.ac.kr">Email</a> |
+      <a href="https://www.instagram.com/2jinw0_0/">Instagram</a>
+    </div>
+    <p class="muted" style="font-size: 0.8rem; color: #aaa;">© 2026 Jinwoo Lee. All rights reserved.</p>
   </footer>
+
 </body>
 </html>
