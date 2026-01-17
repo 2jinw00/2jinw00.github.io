@@ -12,8 +12,8 @@
   <style>
     /* [변수 설정] */
     :root {
-      --kaist-blue: #01438F; /* KAIST 메인 컬러 */
-      --ksa-blue: #1E2083;   /* KSA 메인 컬러 */
+      --kaist-blue: #01438F;
+      --ksa-blue: #1E2083;
       --text-main: #222;
       --text-sub: #555;
       --bg-color: #f9f9f9;
@@ -64,7 +64,7 @@
 
     /* [메인 레이아웃] */
     main.wrap {
-      max-width: 900px;
+      max-width: 1100px; /* 좌우 분할이라 폭을 조금 넓힘 */
       margin: 0 auto;
       padding: 0 20px 80px;
     }
@@ -73,66 +73,116 @@
     .intro-text h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
 
     /* =========================================
-       [새로운 타임라인 스타일 - Bar Layout]
+       [좌우 분할 타임라인 스타일]
        ========================================= */
     .timeline-section {
       display: flex;
       flex-direction: column;
-      gap: 40px; /* KAIST와 KSA 사이 간격 */
+      gap: 60px; /* 그룹 간 간격 */
     }
 
-    /* 하나의 교육 기간 블록 (Row) */
+    /* 하나의 교육 기간 블록 (Flexbox) */
     .edu-block {
       display: flex;
-      position: relative;
+      width: 100%;
+      /* 좌/우측 중 더 긴 쪽에 맞춰 높이가 늘어남 */
+      align-items: stretch; 
     }
 
-    /* 1. 왼쪽: 텍스트 (KAIST/KSA) */
-    .edu-label {
-      width: 100px; /* 라벨 너비 고정 */
+    /* [1. 왼쪽 구역: 학위/전공 정보] */
+    .left-col {
+      flex: 1; /* 가변 너비 */
       text-align: right;
-      padding-right: 20px;
-      font-weight: 800;
-      font-size: 1.4rem;
-      padding-top: 10px; /* 바 시작점과 시각적 정렬 */
-      flex-shrink: 0;
+      padding-right: 30px;
+      padding-top: 10px;
+    }
+
+    .org-name {
+      font-size: 1.8rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 5px;
     }
     .kaist-text { color: var(--kaist-blue); }
     .ksa-text { color: var(--ksa-blue); }
 
-    /* 2. 중앙: 굵은 Bar (늘어나는 막대) */
+    .period-main {
+      font-size: 1rem;
+      color: #888;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: inline-block;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 2px;
+    }
+
+    /* 학위 상세 목록 */
+    .degree-list {
+      list-style: none;
+      font-size: 0.95rem;
+      color: #444;
+    }
+    .degree-list li {
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .degree-list li strong {
+        display: block;
+        color: #222;
+        font-size: 1rem;
+        margin-bottom: 2px;
+    }
+    /* 중요 전공 강조 */
+    .degree-highlight {
+      font-weight: bold;
+      color: #333;
+    }
+
+
+    /* [2. 중앙: 굵은 Bar] */
     .bar-container {
-      width: 40px; /* 바가 들어갈 공간 */
+      width: 40px; /* Bar 영역 너비 */
       flex-shrink: 0;
       display: flex;
-      justify-content: center; /* 가운데 정렬 */
+      justify-content: center;
     }
     
     .thick-bar {
-      width: 24px; /* 바 두께 */
-      border-radius: 12px; /* 둥근 끝 */
-      height: 100%; /* 콘텐츠 길이에 맞춰 늘어남 */
+      width: 20px; /* 실제 색칠되는 Bar 두께 */
+      border-radius: 10px;
+      height: 100%; /* 부모 높이에 꽉 참 */
+      min-height: 150px; /* 내용이 없어도 최소 이만큼은 보임 */
     }
-    .bar-kaist { background-color: var(--kaist-blue); }
-    .bar-ksa { background-color: var(--ksa-blue); }
+    .bar-kaist { background-color: var(--kaist-blue); opacity: 0.9; }
+    .bar-ksa { background-color: var(--ksa-blue); opacity: 0.9; }
 
-    /* 3. 오른쪽: 세부 활동 리스트 (Activities) */
-    .activities-list {
-      flex-grow: 1;
-      padding-left: 20px;
-      padding-top: 5px;
-      padding-bottom: 20px;
+
+    /* [3. 오른쪽 구역: 연구/활동 정보] */
+    .right-col {
+      flex: 1; /* 가변 너비 */
+      padding-left: 30px;
+      padding-top: 15px; /* 왼쪽 제목과 시각적 높이 맞춤 */
     }
 
-    /* 개별 활동 아이템 */
+    /* 오른쪽 섹션 제목 (Research Experience) */
+    .section-header {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #999;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    /* 활동 아이템 */
     .activity-item {
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       position: relative;
-      padding-left: 20px; /* 얇은 선과의 간격 */
+      padding-left: 20px; /* 세로 선 공간 확보 */
     }
     .activity-item:last-child { margin-bottom: 0; }
 
-    /* 스케치에 있던 얇은 파란 선 (Sub-line) */
+    /* 왼쪽에 얇은 선 (타임라인 느낌 보조) */
     .activity-item::before {
       content: '';
       position: absolute;
@@ -140,30 +190,26 @@
       top: 5px;
       bottom: 5px;
       width: 3px;
-      background-color: #ddd; /* 기본 회색 */
+      background-color: #eee;
       border-radius: 2px;
     }
-    /* KAIST 내부 활동은 파란 선 */
-    .kaist-group .activity-item::before { background-color: rgba(1, 67, 143, 0.4); }
-    
-    /* 강조하고 싶은 최신 활동 */
-    .highlight-item::before { 
-        background-color: var(--kaist-blue); 
-        width: 4px;
-    }
+    /* KAIST 내부 활동 선 색상 */
+    .kaist-group .activity-item::before { background-color: rgba(1, 67, 143, 0.3); }
+    /* 강조 아이템 (최신) */
+    .highlight-item::before { background-color: var(--kaist-blue); width: 4px; }
 
-    /* 텍스트 스타일 */
     .period-badge {
       display: inline-block;
       font-size: 0.8rem;
-      color: #777;
+      color: #666;
       margin-bottom: 4px;
-      background: #eee;
+      background: #f0f0f0;
       padding: 2px 8px;
       border-radius: 4px;
     }
+    
     .lab-name {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: #222;
       margin-bottom: 4px;
@@ -174,16 +220,6 @@
       font-size: 0.95rem;
       color: #555;
     }
-    
-    /* 교육(학위) 정보 스타일 (가장 아래 배치) */
-    .degree-info {
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px dashed #ddd;
-    }
-    .degree-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 5px; }
-    .degree-list { list-style: none; font-size: 0.9rem; color: #555; }
-    .degree-list li::before { content: "• "; color: #ccc; }
 
     /* [푸터] */
     footer {
@@ -196,13 +232,29 @@
     footer a { color: #fff; margin: 0 10px; opacity: 0.7; }
     footer a:hover { opacity: 1; text-decoration: underline; }
 
-    /* [모바일 대응] */
-    @media (max-width: 600px) {
-      .edu-label { width: 60px; font-size: 1rem; padding-right: 10px;}
-      .bar-container { width: 30px; }
-      .thick-bar { width: 14px; border-radius: 7px;}
-      .activities-list { padding-left: 15px; }
-      header.main-header h1 { font-size: 2rem; }
+    /* [모바일 반응형] - 좁은 화면에서는 위아래로 쌓음 */
+    @media (max-width: 768px) {
+      .edu-block { flex-direction: column; }
+      
+      /* 왼쪽(상단) 정보 모바일 스타일 */
+      .left-col { 
+        text-align: left; 
+        padding-right: 0; 
+        padding-left: 20px;
+        border-left: 5px solid #eee; /* 모바일용 약식 Bar */
+        margin-left: 10px;
+        margin-bottom: 20px;
+      }
+      .kaist-group .left-col { border-left-color: var(--kaist-blue); }
+      .ksa-group .left-col { border-left-color: var(--ksa-blue); }
+
+      /* 중앙 Bar는 모바일에서 숨김 (공간 절약) */
+      .bar-container { display: none; }
+
+      /* 오른쪽(하단) 정보 모바일 스타일 */
+      .right-col { padding-left: 20px; }
+      
+      .org-name { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -224,67 +276,74 @@
     
     <section class="intro-text">
       <h2 class="main-text">Curriculum Vitae</h2>
-      <p style="color:#777;">Education Timeline &amp; Research Experience</p>
+      <p style="color:#777;">Education &amp; Research Experience</p>
     </section>
 
     <div class="timeline-section">
 
       <div class="edu-block kaist-group">
-        <div class="edu-label kaist-text">KAIST</div>
+        
+        <div class="left-col">
+          <div class="org-name kaist-text">KAIST</div>
+          <div class="period-main">2023. Feb - Current</div>
+          
+          <ul class="degree-list">
+            <li><strong>Undergraduate Program</strong></li>
+            <li>Major in <span class="degree-highlight">Biological Sciences</span></li>
+            <li>Double Major in <span class="degree-highlight">Transdisciplinary Studies</span></li>
+            <li>Special Designated Major in <span class="degree-highlight">AI</span></li>
+            <li style="margin-top:8px; font-size: 0.9rem; color:#666;">
+               Minor in STP &amp; Culture Technology
+            </li>
+          </ul>
+        </div>
         
         <div class="bar-container">
           <div class="thick-bar bar-kaist"></div>
         </div>
 
-        <div class="activities-list">
-          
+        <div class="right-col">
+          <div class="section-header">Research Experience</div>
+
           <div class="activity-item highlight-item">
             <span class="period-badge">2025. Sep - 2026. Feb</span>
             <div class="lab-name">Visual Neurodynamics Lab</div>
-            <div class="lab-desc">Undergraduate Intern @ Dept. of Brain &amp; Cognitive Sciences</div>
+            <div class="lab-desc">Undergraduate Intern<br>@ Dept. of Brain &amp; Cognitive Sciences</div>
           </div>
 
           <div class="activity-item">
             <span class="period-badge">2024. Mar - 2025. Dec</span>
             <div class="lab-name">Behavioral Intelligence Lab</div>
-            <div class="lab-desc">Undergraduate Intern @ Dept. of Brain &amp; Cognitive Sciences</div>
+            <div class="lab-desc">Undergraduate Intern<br>@ Dept. of Brain &amp; Cognitive Sciences</div>
           </div>
 
           <div class="activity-item">
             <span class="period-badge">2021. Jan - 2021. Dec</span>
             <div class="lab-name">Lab of Immunotherapy</div>
-            <div class="lab-desc">Intern @ Dept. of Biological Sciences</div>
+            <div class="lab-desc">Intern<br>@ Dept. of Biological Sciences</div>
           </div>
+        </div>
 
-          <div class="degree-info">
-            <div class="period-badge">2023. Feb - Current</div>
-            <div class="degree-title">Undergraduate Program</div>
-            <ul class="degree-list">
-              <li>Major in Biological Sciences</li>
-              <li>Double Major in Transdisciplinary Studies</li>
-              <li>Special Designated Major in AI</li>
-              <li>Minor in STP &amp; Culture Technology</li>
-            </ul>
-          </div>
-
-        </div> </div> <div class="edu-block ksa-group">
-        <div class="edu-label ksa-text">KSA</div>
+      </div> <div class="edu-block ksa-group">
+        
+        <div class="left-col">
+          <div class="org-name ksa-text">KSA</div>
+          <div class="period-main">2020. Feb - 2023. Feb</div>
+          <div style="font-weight:bold;">High School Diploma</div>
+          <div style="font-size:0.9rem; color:#555;">Korea Science Academy of KAIST</div>
+        </div>
         
         <div class="bar-container">
           <div class="thick-bar bar-ksa"></div>
         </div>
 
-        <div class="activities-list">
+        <div class="right-col">
+          <div class="section-header">Key Studies</div>
           
-          <div class="activity-item" style="margin-bottom:0;">
-            <span class="period-badge">2020. Feb - 2023. Feb</span>
-            <div class="lab-name">Korea Science Academy of KAIST</div>
-            <div class="lab-desc">High School Diploma</div>
-            <ul class="degree-list" style="margin-top:5px;">
-              <li>Majorly Studied in Biology &amp; Astronomy</li>
-            </ul>
+          <div class="activity-item">
+            <div class="lab-name">Academic Focus</div>
+            <div class="lab-desc">Majorly Studied in Biology &amp; Astronomy</div>
           </div>
-
         </div>
       </div> </div> </main>
 
