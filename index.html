@@ -14,12 +14,10 @@
     :root {
       --kaist-blue: #01438F;
       --ksa-blue: #1E2083;
+      --light-blue-line: #8FB8E6; /* 얇은 연결선 색상 (KAIST Blue의 밝은 버전) */
       --text-color: #333;
       --bg-color: #f9f9f9;
-      --card-bg-default: #fff;
-      /* 투명도 적용된 배경색 */
-      --kaist-bg-transparent: rgba(1, 67, 143, 0.15); /* KAIST 색상 투명도 15% */
-      --ksa-bg-transparent: rgba(30, 32, 131, 0.15);  /* KSA 색상 투명도 15% */
+      --card-bg: #fff;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,7 +32,7 @@
     a { text-decoration: none; color: inherit; transition: 0.3s; }
     a:hover { color: var(--kaist-blue); }
 
-    /* [네비게이션] */
+    /* [네비게이션 & 헤더] - 기존 유지 */
     nav {
       background: #fff;
       padding: 1rem;
@@ -46,7 +44,6 @@
     }
     nav a { margin: 0 15px; font-weight: 500; }
 
-    /* [헤더 섹션] */
     header.main-header {
       text-align: center;
       padding: 4rem 1rem 2rem;
@@ -69,9 +66,8 @@
       border-radius: 20px;
     }
 
-    /* [메인 컨텐츠] */
     main.wrap {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 20px 60px;
     }
@@ -82,145 +78,137 @@
     }
     .intro-text h2 { font-size: 1.8rem; margin-bottom: 1rem; }
 
-    /* [타임라인 스타일] */
     .section-title {
-      text-align: center;
-      margin-bottom: 3rem;
-      position: relative;
+        text-align: center;
+        margin-bottom: 3rem;
     }
     .section-title h2 {
         display: inline-block;
-        background: var(--bg-color);
-        padding: 0 20px;
-        position: relative;
-        z-index: 1;
-    }
-    .section-title::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        background: #ddd;
-        top: 50%;
-        left: 0;
-        z-index: 0;
-        border-radius: 2px;
+        border-bottom: 3px solid var(--kaist-blue);
+        padding-bottom: 10px;
     }
 
-    .timeline {
-      position: relative;
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px 0;
+
+    /* [새로운 Affiliation 레이아웃 스타일] */
+    .affiliation-container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px; /* 그룹 간 간격 */
+    }
+
+    .affiliation-group {
+        display: flex;
+    }
+
+    /* 왼쪽: 기관 이름 및 두꺼운 막대 영역 */
+    .group-left {
+        position: relative;
+        width: 120px; /* 왼쪽 영역 너비 고정 */
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end; /* 텍스트 오른쪽 정렬 */
+        padding-right: 20px;
+    }
+
+    .group-name {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-align: right;
+    }
+
+    /* 두꺼운 수직 막대 */
+    .group-bar {
+        position: absolute;
+        top: 40px; /* 기관 이름 아래부터 시작 */
+        bottom: 0;
+        right: 0;
+        width: 20px; /* 막대 두께 */
+        border-radius: 10px; /* 둥근 모서리 */
+    }
+    /* 색상 적용 */
+    .kaist-group .group-name { color: var(--kaist-blue); }
+    .kaist-group .group-bar { background-color: var(--kaist-blue); }
+    .ksa-group .group-name { color: var(--ksa-blue); }
+    .ksa-group .group-bar { background-color: var(--ksa-blue); }
+
+
+    /* 오른쪽: 세부 활동 목록 영역 */
+    .group-right {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* 활동 아이템 간 간격 */
+        padding-top: 40px; /* 막대 시작점과 높이 맞춤 */
+    }
+
+    /* 개별 활동 아이템 (얇은 선 + 카드) */
+    .activity-item {
+        display: flex;
+        align-items: stretch; /* 높이 맞춤 */
+    }
+
+    /* 얇은 연결선 */
+    .activity-line {
+        width: 4px;
+        background-color: var(--light-blue-line);
+        border-radius: 2px;
+        margin-right: 20px; /* 선과 카드 사이 간격 */
+        flex-shrink: 0;
     }
     
-    /* 타임라인 중앙 선 - 둥근 점선으로 변경 */
-    .timeline::after {
-      content: '';
-      position: absolute;
-      width: 6px;
-      background-image: radial-gradient(circle, #ccc 30%, transparent 31%); /* 둥근 점 패턴 */
-      background-size: 10px 10px; /* 점 크기 및 간격 조절 */
-      background-repeat: repeat-y;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      margin-left: -3px;
+    /* 메인 활동(Education)은 선 색상을 기관 색상으로 */
+    .kaist-group .main-activity .activity-line { background-color: var(--kaist-blue); }
+    .ksa-group .main-activity .activity-line { background-color: var(--ksa-blue); }
+
+    /* 활동 내용 카드 스타일 */
+    .activity-content {
+        flex-grow: 1;
+        background: var(--card-bg);
+        padding: 20px 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border-left: 3px solid transparent; /* 왼쪽 테두리 공간 */
+        transition: transform 0.2s;
     }
-
-    .item {
-      padding: 20px 50px;
-      position: relative;
-      width: 50%;
-      box-sizing: border-box;
+    .activity-content:hover {
+        transform: translateX(5px);
     }
-
-    .item.left { left: 0; text-align: right; }
-    .item.right { left: 50%; }
-
-    /* 타임라인 점 */
-    .dot {
-      width: 24px;
-      height: 24px;
-      background-color: #fff;
-      border: 5px solid var(--kaist-blue); /* 기본은 KAIST 색 */
-      position: absolute;
-      top: 35px; /* 카드 상단과 대략 맞춤 */
-      border-radius: 50%;
-      z-index: 2;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
+    
+    /* 카드 내부 텍스트 스타일 */
+    .act-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
     }
-    .item.left .dot { right: -12px; }
-    .item.right .dot { left: -12px; }
-
-    /* 가장 최신(맨 위) 아이템 강조 - Trace 효과 */
-    .item:first-child .dot {
-        background-color: var(--kaist-blue);
-        box-shadow: 0 0 0 6px rgba(1, 67, 143, 0.2), 0 0 20px rgba(1, 67, 143, 0.4); /* 빛나는 효과 */
-        border-width: 0; /* 테두리 없이 꽉 찬 원 */
-        width: 28px;
-        height: 28px;
-        right: -14px; /* 위치 미세 조정 */
+    .act-role {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #222;
+        margin-right: 10px;
     }
-    .item:first-child.right .dot { left: -14px; }
-
-
-    /* 카드 스타일 */
-    .card {
-      padding: 25px;
-      background-color: var(--card-bg-default);
-      border-radius: 25px; /* 더 둥글게 */
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      border: 2px solid transparent; /* 테두리 공간 확보 */
-      transition: transform 0.2s;
+    .act-date {
+        font-size: 0.9rem;
+        color: #777;
+        font-weight: 500;
     }
-    .card:hover { transform: translateY(-5px); }
-
-    /* 소속별 배경색 및 스타일 적용 클래스 */
-    .kaist-bg .card {
-        background-color: var(--kaist-bg-transparent);
-        border-color: rgba(1, 67, 143, 0.1);
+    .act-meta {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 10px;
     }
-    .ksa-bg .dot { border-color: var(--ksa-blue); } /* KSA 아이템 점 색상 변경 */
-    .ksa-bg .card {
-        background-color: var(--ksa-bg-transparent);
-        border-color: rgba(30, 32, 131, 0.1);
+    .act-bullets {
+        padding-left: 20px;
+        font-size: 0.95rem;
+        color: #444;
     }
+    .act-bullets li { margin-bottom: 5px; }
 
-    /* 카드 내부 콘텐츠 정렬 */
-    .item.left .card-top { flex-direction: row-reverse; }
-    .item.left .bullets { padding-right: 20px; padding-left: 0; display: inline-block; text-align: right;}
-    .item.left .bullets li { list-style-position: inside; }
 
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .pill {
-      background: #fff;
-      color: #555;
-      padding: 6px 12px;
-      border-radius: 15px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    /* 소속별 pill 색상 포인트 */
-    .kaist-bg .pill { color: var(--kaist-blue); }
-    .ksa-bg .pill { color: var(--ksa-blue); }
-
-    .date { font-size: 0.9rem; color: #777; font-weight: 500; }
-    .role { font-size: 1.25rem; font-weight: 800; margin-bottom: 5px; color: #222; }
-    .meta { font-size: 1rem; color: #555; margin-bottom: 12px; font-style: normal; font-weight: 500;}
-    .bullets { padding-left: 20px; font-size: 1rem; color: #444; }
-    .bullets li { margin-bottom: 6px; }
-
-    /* [푸터] */
+    /* [푸터] - 기존 유지 */
     footer {
       background: linear-gradient(to right, #222, #333);
       color: #fff;
@@ -235,19 +223,34 @@
 
     /* [모바일 반응형] */
     @media screen and (max-width: 768px) {
-      .timeline::after { left: 31px; margin-left: -3px;}
-      .item { width: 100%; padding-left: 75px; padding-right: 20px; text-align: left; }
-      .item.right { left: 0; }
-      
-      .item.left .dot, .item.right .dot {
-        left: 19px;
-        right: auto;
-      }
-      .item:first-child .dot { left: 17px; } /* 강조 점 위치 조정 */
-      
-      header.main-header h1 { font-size: 2rem; }
-      .item.left .card-top { flex-direction: row; }
-      .item.left .bullets { padding-left: 20px; padding-right: 0; text-align: left; }
+        .affiliation-group {
+            flex-direction: column;
+        }
+        .group-left {
+            width: 100%;
+            flex-direction: row;
+            align-items: center;
+            padding-right: 0;
+            margin-bottom: 15px;
+        }
+        .group-name {
+            text-align: left;
+            margin-bottom: 0;
+            margin-right: 15px;
+        }
+        /* 모바일에서는 두꺼운 막대와 얇은 선 숨김 */
+        .group-bar, .activity-line {
+            display: none;
+        }
+        .group-right {
+            padding-top: 0;
+        }
+        .activity-content {
+            border-left: 3px solid var(--kaist-blue); /* 대신 왼쪽에 테두리 표시 */
+        }
+        .ksa-group .activity-content {
+            border-left-color: var(--ksa-blue);
+        }
     }
   </style>
 </head>
@@ -280,79 +283,85 @@
         </p>
       </div>
 
-      <div class="timeline" aria-label="Vitae timeline">
+      <div class="affiliation-container">
 
-        <div class="item right kaist-bg">
-          <span class="dot"></span>
-          <article class="card">
-            <div class="card-top">
-              <span class="pill">Research</span>
-              <span class="date">2025. Sep. - 2026. Feb.</span>
+        <div class="affiliation-group kaist-group">
+          <div class="group-left">
+            <h3 class="group-name">KAIST</h3>
+            <div class="group-bar"></div> </div>
+          
+          <div class="group-right">
+            
+            <div class="activity-item main-activity">
+              <div class="activity-line"></div> <div class="activity-content">
+                <div class="act-header">
+                  <span class="act-role">Undergraduate</span>
+                  <span class="act-date">2023. Feb. - Current</span>
+                </div>
+                <div class="act-meta">Dept. of Biological Sciences</div>
+                <ul class="act-bullets">
+                    <li>Major in Biological Sciences</li>
+                    <li>Double Major in Transdisciplinary Studies</li>
+                    <li>Special Designated Major in AI</li>
+                    <li>Minor in STP &amp; Culture Technology</li>
+                </ul>
+              </div>
             </div>
-            <div class="role">Visual Neurodynamics Lab</div>
-            <div class="meta">Undergraduate Intern @ KAIST (Brain &amp; Cognitive Sciences)</div>
-          </article>
-        </div>
 
-        <div class="item right kaist-bg">
-          <span class="dot"></span>
-          <article class="card">
-            <div class="card-top">
-              <span class="pill">Research</span>
-              <span class="date">2024. Mar. - 2025. Dec.</span>
+            <div class="activity-item">
+                <div class="activity-line"></div>
+                <div class="activity-content">
+                  <div class="act-header">
+                    <span class="act-role">Visual Neurodynamics Lab</span>
+                    <span class="act-date">2025. Sep. - 2026. Feb.</span>
+                  </div>
+                  <div class="act-meta">Undergraduate Intern @ Dept. of Brain &amp; Cognitive Sciences</div>
+                </div>
             </div>
-            <div class="role">Behavioral Intelligence Lab</div>
-            <div class="meta">Undergraduate Intern @ KAIST (Brain &amp; Cognitive Sciences)</div>
-          </article>
-        </div>
 
-        <div class="item left kaist-bg">
-          <span class="dot"></span>
-          <article class="card">
-            <div class="card-top">
-              <span class="pill">Education</span>
-              <span class="date">2023. Feb. - Current</span>
+            <div class="activity-item">
+                <div class="activity-line"></div>
+                <div class="activity-content">
+                  <div class="act-header">
+                    <span class="act-role">Behavioral Intelligence Lab</span>
+                    <span class="act-date">2024. Mar. - 2025. Dec.</span>
+                  </div>
+                  <div class="act-meta">Undergraduate Intern @ Dept. of Brain &amp; Cognitive Sciences</div>
+                </div>
             </div>
-            <div class="role">KAIST</div>
-            <div class="meta">Undergraduate</div>
-            <ul class="bullets">
-              <li>Major in Biological Sciences</li>
-              <li>Double Major in Transdisciplinary Studies</li>
-              <li>Special Designated Major in AI</li>
-              <li>Minor in STP &amp; Culture Technology</li>
-            </ul>
-          </article>
-        </div>
 
-        <div class="item right kaist-bg">
-          <span class="dot"></span>
-          <article class="card">
-            <div class="card-top">
-              <span class="pill">Research</span>
-              <span class="date">2021. Jan. - 2021. Dec.</span>
+            <div class="activity-item">
+                <div class="activity-line"></div>
+                <div class="activity-content">
+                  <div class="act-header">
+                    <span class="act-role">Lab of Immunotherapy</span>
+                    <span class="act-date">2021. Jan. - 2021. Dec.</span>
+                  </div>
+                  <div class="act-meta">Intern @ Dept. of Biological Sciences</div>
+                </div>
             </div>
-            <div class="role">Lab of Immunotherapy</div>
-            <div class="meta">Intern @ KAIST (Biological Sciences)</div>
-          </article>
-        </div>
 
-        <div class="item left ksa-bg">
-          <span class="dot"></span>
-          <article class="card">
-            <div class="card-top">
-              <span class="pill">Education</span>
-              <span class="date">2020. Feb. - 2023. Feb.</span>
+          </div> </div> <div class="affiliation-group ksa-group">
+          <div class="group-left">
+            <h3 class="group-name">KSA</h3>
+            <div class="group-bar"></div> </div>
+          
+          <div class="group-right">
+            
+            <div class="activity-item main-activity">
+              <div class="activity-line"></div> <div class="activity-content">
+                <div class="act-header">
+                  <span class="act-role">Korea Science Academy of KAIST</span>
+                  <span class="act-date">2020. Feb. - 2023. Feb.</span>
+                </div>
+                <div class="act-meta">High School</div>
+                <ul class="act-bullets">
+                    <li>Majorly Studied in Biology &amp; Astronomy</li>
+                </ul>
+              </div>
             </div>
-            <div class="role">Korea Science Academy of KAIST</div>
-            <div class="meta">High School</div>
-            <ul class="bullets">
-              <li>Majorly Studied in Biology &amp; Astronomy</li>
-            </ul>
-          </article>
-        </div>
 
-      </div>
-    </section>
+          </div> </div> </div> </section>
 
   </main>
 
