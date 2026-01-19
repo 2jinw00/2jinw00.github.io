@@ -10,14 +10,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
   <style>
-    /* [공통 변수] */
+    /* [변수 설정] */
     :root {
-      /* 몬드리안 팔레트 */
+      /* 몬드리안 팔레트 (진중한 보라 & 민트) */
       --col-deep-violet: #4527A0;
       --col-muted-violet: #7E57C2;
       --col-dark-navy: #283593;
       --col-mint-muted: #4DB6AC;
       --col-mint-deep: #00695C;
+      --col-status-bg: #fff;        /* 상태창 배경 (흰색) */
       
       --col-white-block: #ffffff;
       --bg-neutral: #f4f4f6;
@@ -31,11 +32,11 @@
       line-height: 1.6;
       color: var(--text-main);
       background-color: var(--bg-neutral);
-      overflow-y: scroll; /* 스크롤바 상시 표시로 레이아웃 흔들림 방지 */
+      overflow-y: scroll;
     }
 
     a { text-decoration: none; color: inherit; transition: 0.3s; }
-    
+
     /* [네비게이션] */
     nav {
       background: rgba(255, 255, 255, 0.9);
@@ -61,55 +62,52 @@
     /* [헤더] */
     header.main-header {
       text-align: center;
-      padding: 5rem 1rem 3rem;
+      padding: 4rem 1rem 2rem;
       max-width: 800px;
       margin: 0 auto;
     }
     header.main-header h1 { 
-      font-size: 3.5rem; 
+      font-size: 3rem; 
       margin-bottom: 0.5rem; 
-      letter-spacing: -2px; 
+      letter-spacing: -1.5px; 
       color: #111; 
       font-weight: 900;
     }
-    header.main-header p { color: #555; font-size: 1.1rem; margin-bottom: 1rem; }
-    
+    header.main-header p { color: #555; font-size: 1rem; margin-bottom: 1rem; }
     .tag-pill {
       display: inline-block;
-      padding: 5px 15px;
+      padding: 4px 12px;
       background-color: #ddd;
       color: #444;
       border-radius: 20px;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
 
     /* [메인 컨텐츠] */
     main.wrap {
-      max-width: 1100px; /* 그리드가 커져서 폭을 조금 넓힘 */
+      max-width: 1200px; /* 6열이라 폭을 더 넓힘 */
       margin: 0 auto;
-      padding: 20px 20px 120px;
+      padding: 20px 20px 100px;
     }
 
     /* =========================================
-       [EXTENDED MONDRIAN GRID]
-       더 많고 긴 사각형 그리드
+       [6x23 MONDRIAN GRID]
        ========================================= */
     .bento-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4열 유지 */
-      grid-auto-rows: 180px; /* 기본 높이 유지 */
+      /* 6열 그리드 */
+      grid-template-columns: repeat(6, 1fr); 
+      /* 기본 행 높이 140px (좀 더 조밀하게) */
+      grid-auto-rows: 140px; 
       gap: 15px;
-      /* 그리드 아이템이 많아지면서 자동으로 행(Row)이 늘어납니다.
-         현재 구성으로는 약 5행 정도의 높이가 됩니다.
-      */
     }
 
     /* 공통 카드 스타일 */
     .b-card {
       position: relative;
       border-radius: 2px;
-      padding: 30px;
+      padding: 25px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -118,7 +116,7 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.03);
     }
 
-    /* 1. Interactive Cards (색상 링크) */
+    /* 1. Link Cards (색상) */
     .link-card { color: #fff; cursor: pointer; }
     .link-card:hover {
       transform: translateY(-5px) scale(1.01);
@@ -131,67 +129,134 @@
     }
     .link-card:hover::before { background: rgba(0,0,0,0.15); }
 
-    /* 2. Empty Cards (흰색 빈 공간 - 나중에 이미지 들어갈 곳) */
+    /* 2. Text/Status Cards (흰색 배경, 텍스트 정보) */
+    .text-card {
+      background-color: var(--col-status-bg);
+      color: #333;
+      border: 1px solid #ddd;
+    }
+    .text-card h4 { font-size: 0.9rem; color: var(--col-deep-violet); text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
+    .text-card p { font-size: 1rem; font-weight: 500; line-height: 1.4; }
+
+    /* 3. Empty Cards (이미지용 플레이스홀더) */
     .empty-card {
       background-color: var(--col-white-block);
-      border: 1px solid #eee; 
-      /* 추후 이미지 삽입을 위한 준비 */
+      border: 1px solid #eee;
+      /* 배경 이미지 설정 예시 */
       background-size: cover;
       background-position: center;
+      transition: transform 0.3s;
     }
+    /* 빈 카드에 마우스 올리면 살짝 테두리 강조 (선택 사항) */
+    .empty-card:hover { border-color: #ccc; }
 
     /* 텍스트 스타일 */
     .b-content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-    .b-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 5px; }
-    .b-desc { font-size: 0.95rem; opacity: 0.9; font-weight: 400; line-height: 1.4; }
-    .b-arrow { align-self: flex-end; font-size: 1.5rem; opacity: 0; transform: translateX(-10px); transition: all 0.4s; }
+    .b-title { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 5px; }
+    .b-desc { font-size: 0.9rem; opacity: 0.9; font-weight: 400; line-height: 1.4; }
+    .b-arrow { align-self: flex-end; font-size: 1.4rem; opacity: 0; transform: translateX(-10px); transition: all 0.4s; }
     .link-card:hover .b-arrow { opacity: 1; transform: translateX(0); }
 
 
-    /* [GRID PLACEMENT - 확장된 레이아웃] */
+    /* [GRID PLACEMENT - 6 Column System] */
 
-    /* --- 메인 메뉴 --- */
-    .item-vitae { grid-column: span 2; grid-row: span 2; background-color: var(--col-deep-violet); }
+    /* --- [ROW 1-3] TOP SECTION (Defined) --- */
+    
+    /* 1. Photo Box (3x3) - Left Top */
+    .item-photo-main {
+      grid-column: span 3;
+      grid-row: span 3;
+      /* 임시 배경색 (사진이 없을 때) 또는 이미지 URL */
+      background-color: #ddd; 
+      /* background-image: url('profile.jpg'); */
+    }
+    /* 사진 박스 내부 텍스트 (옵션) */
+    .photo-label { 
+      position: absolute; bottom: 20px; left: 20px; 
+      font-weight: 700; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.5); 
+    }
+
+    /* 2. Status Box (3x1) - Right Top */
+    .item-status {
+      grid-column: span 3;
+      grid-row: span 1;
+    }
+
+    /* 3. Vitae (3x2) - Right Middle */
+    .item-vitae {
+      grid-column: span 3;
+      grid-row: span 2;
+      background-color: var(--col-deep-violet);
+    }
     .item-vitae .b-title { font-size: 2.5rem; }
 
-    /* Publicus를 세로로 더 길게 (3칸 차지) */
-    .item-publicus { grid-column: span 1; grid-row: span 3; background-color: var(--col-muted-violet); }
 
-    .item-lectio { grid-column: span 2; grid-row: span 1; background-color: var(--col-dark-navy); }
-    .item-ludus { grid-column: span 1; grid-row: span 1; background-color: var(--col-mint-muted); }
-    .item-recordum { grid-column: span 1; grid-row: span 1; background-color: var(--col-mint-deep); }
+    /* --- [ROW 4+] MIDDLE SECTION --- */
 
+    /* Publicus: 2x3 (세로로 긴 최대 크기) */
+    .item-publicus {
+      grid-column: span 2;
+      grid-row: span 3;
+      background-color: var(--col-muted-violet);
+    }
 
-    /* --- 빈 플레이스홀더 (나중에 사진/표지 들어갈 곳) --- */
+    /* Lectio: 2x2 (정사각형) */
+    .item-lectio {
+      grid-column: span 2;
+      grid-row: span 2;
+      background-color: var(--col-dark-navy);
+    }
     
-    /* 1x1 사이즈 */
-    .item-empty-1 { grid-column: span 1; grid-row: span 1; }
-    .item-empty-last { grid-column: span 1; grid-row: span 1; }
+    /* Ludus: 1x2 (세로형 소) */
+    .item-ludus {
+      grid-column: span 1;
+      grid-row: span 2;
+      background-color: var(--col-mint-muted);
+    }
 
-    /* 1x2 사이즈 (세로로 긴 형태 - 논문 표지 등) */
-    .item-empty-tall-1 { grid-column: span 1; grid-row: span 2; }
-    .item-empty-tall-2 { grid-column: span 1; grid-row: span 2; }
+    /* Recordum: 2x1 (가로형 소) */
+    .item-recordum {
+      grid-column: span 2;
+      grid-row: span 1;
+      background-color: var(--col-mint-deep);
+    }
 
-    /* 2x2 사이즈 (큰 정사각형 - 대표 사진 등) */
-    .item-empty-big-1 { grid-column: span 2; grid-row: span 2; }
 
+    /* --- EMPTY BLOCKS (Mondrian Fillers) --- */
+    /* 위치를 grid-column / grid-row로 명시하거나, auto-flow에 맡기기 */
+    
+    /* Row 4 fill */
+    .fill-r4-1 { grid-column: span 1; grid-row: span 1; } /* 1x1 */
+    .fill-r4-2 { grid-column: span 1; grid-row: span 1; } /* 1x1 */
 
-    /* [푸터] */
-    footer { text-align: center; padding: 3rem; margin-top: 4rem; color: #888; font-size: 0.85rem; border-top: 1px solid #eee;}
-
+    /* Row 5 fill */
+    .fill-r5-big { grid-column: span 2; grid-row: span 2; } /* 2x2 Empty */
+    
+    /* More Fillers for Height */
+    .fill-long-1 { grid-column: span 1; grid-row: span 3; } /* 1x3 Long Empty */
+    .fill-wide-1 { grid-column: span 3; grid-row: span 1; } /* 3x1 Wide Empty */
+    .fill-box-1 { grid-column: span 2; grid-row: span 2; }
+    .fill-box-2 { grid-column: span 1; grid-row: span 1; }
+    
+    
     /* [반응형] */
     @media (max-width: 768px) {
       header.main-header h1 { font-size: 2.5rem; }
-      .bento-grid { grid-template-columns: 1fr; grid-auto-rows: minmax(180px, auto); }
       
-      /* 모바일에서는 모든 아이템 1칸씩 일렬로 나열 */
+      .bento-grid {
+        grid-template-columns: 1fr; /* 모바일은 1열 */
+        grid-auto-rows: minmax(160px, auto);
+      }
+      
+      /* 모바일: 모든 아이템 1칸 */
       .b-card { grid-column: span 1 !important; grid-row: span 1 !important; }
       
-      /* 모바일에서도 빈 공간을 보여줄지 여부 결정 */
-      /* 너무 길어지면 아래 줄의 주석을 해제해서 빈 공간을 숨기세요. */
-      /* .empty-card { display: none; } */
+      /* 주요 아이템 높이 강조 */
+      .item-photo-main { height: 300px; }
+      .item-vitae { height: 200px; }
       
-      .item-vitae { height: 250px; }
+      /* 모바일에서 빈 칸 숨기기 (너무 길어짐 방지) */
+      .empty-card { display: none; }
     }
   </style>
 </head>
@@ -217,6 +282,20 @@
     
     <div class="bento-grid">
       
+      <div class="b-card empty-card item-photo-main" style="background-color: #e0e0e0;">
+        <span class="photo-label">Profile / Main Visual</span>
+      </div>
+
+      <div class="b-card text-card item-status">
+        <div class="b-content">
+           <div style="display:flex; justify-content:space-between; align-items:center;">
+             <h4>Current Focus</h4>
+             <span style="font-size:0.8rem; color:#888;">Updated Jan 2026</span>
+           </div>
+           <p>Analyzing behavioral data with GNNs &amp; Writing a paper on AI Ethics.</p>
+        </div>
+      </div>
+
       <a href="vitae.html" class="b-card link-card item-vitae">
         <div class="b-content">
           <div>
@@ -227,41 +306,42 @@
         </div>
       </a>
 
+
       <a href="publicus.html" class="b-card link-card item-publicus">
         <div class="b-content">
           <div>
             <div class="b-title">Publicus</div>
-            <div class="b-desc">Articles, Essays,<br>&amp; Publications</div>
+            <div class="b-desc">Articles &amp; Publications</div>
           </div>
           <div class="b-arrow">→</div>
         </div>
       </a>
 
-      <div class="b-card empty-card item-empty-1"></div>
-
-      <div class="b-card empty-card item-empty-tall-1"></div>
-
+      <div class="b-card empty-card fill-r4-1"></div>
+      
       <a href="lectio.html" class="b-card link-card item-lectio">
         <div class="b-content">
           <div>
             <div class="b-title">Lectio</div>
-            <div class="b-desc">Study Notes &amp; Archives</div>
+            <div class="b-desc">Study Notes</div>
           </div>
           <div class="b-arrow">→</div>
         </div>
       </a>
+
+      <div class="b-card empty-card fill-r4-2"></div>
 
       <a href="ludus.html" class="b-card link-card item-ludus">
         <div class="b-content">
           <div>
             <div class="b-title">Ludus</div>
-            <div class="b-desc">Hobbies &amp; Play</div>
+            <div class="b-desc">Hobbies</div>
           </div>
           <div class="b-arrow">→</div>
         </div>
       </a>
 
-      <div class="b-card empty-card item-empty-big-1"></div>
+      <div class="b-card empty-card fill-r5-big"></div>
 
       <a href="recordum.html" class="b-card link-card item-recordum">
         <div class="b-content">
@@ -273,9 +353,15 @@
         </div>
       </a>
 
-      <div class="b-card empty-card item-empty-tall-2"></div>
-
-      <div class="b-card empty-card item-empty-last"></div>
+      <div class="b-card empty-card fill-long-1"></div>
+      
+      <div class="b-card empty-card fill-wide-1"></div>
+      
+      <div class="b-card empty-card fill-box-1"></div>
+      <div class="b-card empty-card fill-box-2"></div>
+      <div class="b-card empty-card" style="grid-column: span 1; grid-row: span 1;"></div>
+      <div class="b-card empty-card" style="grid-column: span 2; grid-row: span 1;"></div>
+      <div class="b-card empty-card" style="grid-column: span 1; grid-row: span 2;"></div>
 
     </div> </main>
 
