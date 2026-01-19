@@ -10,14 +10,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* [공통 변수 - 다른 페이지와 동일] */
+    /* [컨셉 컬러 설정: 파스텔 민트 & 퍼플] */
     :root {
+      /* 학교 상징색 (데이터 표현용) */
       --kaist-blue: #01438F;
-      --text-main: #222;
-      --text-sub: #555;
-      --bg-color: #f9f9f9;
-      --card-bg: #fff;
-      --nav-hover: #eef4ff;
+      --ksa-blue: #1E2083;
+
+      /* 웹사이트 메인 테마 (2-Tone Concept) */
+      --theme-mint-bg: #E0F7FA;   /* 아주 연한 민트 배경 */
+      --theme-purple-bg: #F3E5F5; /* 아주 연한 보라 배경 */
+      
+      --theme-mint-accent: #26C6DA; /* 포인트 민트 */
+      --theme-purple-accent: #AB47BC; /* 포인트 보라 */
+
+      /* 그라데이션 (헤더 등) */
+      --concept-gradient: linear-gradient(120deg, #E0F7FA 0%, #F3E5F5 100%);
+      --concept-gradient-hover: linear-gradient(120deg, #d3fbf7 0%, #ecd4ef 100%);
+      
+      --text-main: #333;
+      --text-sub: #666;
+      --bg-color: #fdfdfd; /* 아주 옅은 미색 */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,14 +45,14 @@
     
     /* [네비게이션] */
     nav {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(5px);
       padding: 0;
       text-align: center;
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid #eee;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     .nav-container {
@@ -53,41 +65,52 @@
 
     nav a { 
       display: inline-block;
-      padding: 1rem 1.2rem;
+      padding: 1rem 1.3rem;
       font-weight: 500; 
       font-size: 0.95rem;
-      color: #444;
+      color: #555;
+      position: relative;
     }
 
+    /* 네비게이션 호버 효과: 보라색 텍스트 + 민트 배경 */
     nav a:hover {
-      background-color: var(--nav-hover);
-      color: var(--kaist-blue);
-      font-weight: 700;
+      background-color: var(--theme-mint-bg);
+      color: var(--theme-purple-accent);
     }
 
     nav a.active {
-      color: var(--kaist-blue);
+      color: var(--theme-purple-accent);
       font-weight: 700;
-      border-bottom: 2px solid var(--kaist-blue);
+      border-bottom: 3px solid var(--theme-mint-accent); /* 민트색 밑줄 */
     }
 
-    /* [헤더] */
+    /* [헤더 - 그라데이션 적용] */
     header.main-header {
       text-align: center;
-      padding: 4rem 1rem 3rem;
-      background: #fff;
-      border-bottom: 1px solid #eee;
+      padding: 5rem 1rem 4rem;
+      /* 파스텔 민트 -> 보라 그라데이션 배경 */
+      background: var(--concept-gradient);
+      margin-bottom: 0; /* 메인과 바로 연결 */
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
     }
-    header.main-header h1 { font-size: 3rem; margin-bottom: 0.5rem; letter-spacing: -1.5px; }
-    header.main-header p { color: #666; font-size: 1.1rem; margin-bottom: 1rem; }
+    header.main-header h1 { 
+      font-size: 3.2rem; 
+      margin-bottom: 0.5rem; 
+      letter-spacing: -1.5px; 
+      color: #2c2c2c;
+    }
+    header.main-header p { color: #555; font-size: 1.1rem; margin-bottom: 1.5rem; }
+    
     .tag-pill {
       display: inline-block;
-      padding: 5px 15px;
-      background-color: rgba(1, 67, 143, 0.1);
-      color: var(--kaist-blue);
-      border-radius: 20px;
+      padding: 6px 18px;
+      background-color: #fff; /* 흰색 배경으로 깔끔하게 */
+      color: var(--theme-purple-accent); /* 글자는 보라색 */
+      border-radius: 30px;
       font-weight: 700;
       font-size: 0.9rem;
+      box-shadow: 0 4px 10px rgba(171, 71, 188, 0.15); /* 보라색 그림자 */
     }
 
     /* [메인 레이아웃] */
@@ -103,7 +126,7 @@
       text-align: center;
     }
     .intro-section p {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: #444;
       max-width: 700px;
       margin: 0 auto 20px;
@@ -114,48 +137,69 @@
     .grid-menu {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      gap: 25px;
     }
 
     .menu-card {
       background: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      border: 1px solid transparent;
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+      border: 2px solid transparent; /* 보더 공간 확보 */
+      transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
+      position: relative;
+      overflow: hidden;
     }
 
+    /* 카드 호버 시: 테두리는 민트, 그림자는 보라 */
     .menu-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(1, 67, 143, 0.3);
-      box-shadow: 0 8px 25px rgba(1, 67, 143, 0.15);
+      transform: translateY(-7px);
+      border-color: var(--theme-mint-bg); 
+      box-shadow: 0 10px 30px rgba(171, 71, 188, 0.1); 
+    }
+
+    /* 카드 상단에 얇은 컬러 바 (장식) */
+    .menu-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(to right, var(--theme-mint-accent), var(--theme-purple-accent));
+      opacity: 0.7;
     }
 
     .menu-card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-      color: var(--kaist-blue);
-      font-weight: 700;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      color: #333;
+      font-weight: 800;
     }
     
+    /* 카드 제목 호버 시 색상 변경 */
+    .menu-card:hover h3 {
+      background: -webkit-linear-gradient(45deg, var(--theme-mint-accent), var(--theme-purple-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
     .menu-card p {
       font-size: 0.95rem;
-      color: #666;
-      margin-bottom: 20px;
-      line-height: 1.5;
+      color: #777;
+      margin-bottom: 25px;
+      line-height: 1.6;
     }
 
     .menu-link {
       font-weight: 700;
-      color: #222;
+      color: var(--theme-purple-accent); /* 링크는 보라색 */
       display: inline-flex;
       align-items: center;
-      margin-top: auto; /* 하단 고정 */
+      margin-top: auto;
+      font-size: 0.9rem;
     }
     .menu-link::after {
       content: '→';
@@ -164,24 +208,25 @@
     }
     .menu-card:hover .menu-link::after {
       margin-left: 10px;
+      color: var(--theme-mint-accent);
     }
 
-    /* [푸터] */
+    /* [푸터 - 어두운 보라색 계열로 차분하게] */
     footer {
-      background: #222;
-      color: #fff;
+      background: #2E294E; /* 다크 퍼플 네이비 */
+      color: #e0e0e0;
       text-align: center;
       padding: 3rem;
-      margin-top: 4rem;
+      margin-top: 6rem;
     }
-    footer a { color: #fff; margin: 0 10px; opacity: 0.7; }
+    footer a { color: #fff; margin: 0 10px; opacity: 0.6; }
     footer a:hover { opacity: 1; text-decoration: underline; }
 
     /* 반응형 */
     @media (max-width: 768px) {
-      header.main-header h1 { font-size: 2.2rem; }
-      .nav-container { padding: 0 10px; }
-      nav a { padding: 0.8rem 0.6rem; font-size: 0.85rem; }
+      header.main-header h1 { font-size: 2.3rem; }
+      .nav-container { padding: 0 5px; }
+      nav a { padding: 0.8rem 0.5rem; font-size: 0.85rem; }
     }
   </style>
 </head>
@@ -211,7 +256,7 @@
         안녕하세요, <strong>KAIST 생명과학과 이진우</strong>입니다.<br>
         과학기술과 인문사회학의 접점에서 새로운 가치를 고민합니다.
       </p>
-      <p style="font-size: 0.95rem; color: #777; margin-top: 10px;">
+      <p style="font-size: 0.95rem; color: #888; margin-top: 15px;">
         Studying Biological Sciences &amp; Transdisciplinary Studies.<br>
         Interested in AI Applications, Bio-Ethics, and Science Policy.
       </p>
@@ -269,7 +314,7 @@
       <a href="mailto:atoree@kaist.ac.kr">Email</a> |
       <a href="https://www.instagram.com/2jinw0_0/">Instagram</a>
     </div>
-    <p style="font-size: 0.8rem; color: #888;">© 2026 Jinwoo Lee.</p>
+    <p style="font-size: 0.8rem; color: #aaa;">© 2026 Jinwoo Lee.</p>
   </footer>
 
 </body>
