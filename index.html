@@ -7,24 +7,24 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
   <style>
-    /* [새로운 컨셉 컬러: 진중한 보라 & 몬드리안] */
+    /* [공통 변수] */
     :root {
-      /* 학교 상징색 (유지) */
       --kaist-blue: #01438F;
       --ksa-blue: #1E2083;
 
-      /* 새로운 진중한 테마 컬러 */
-      --theme-violet-deep: #4527A0;   /* 깊고 진한 보라 (강조) */
-      --theme-violet-muted: #7E57C2;  /* 차분한 중간 보라 */
-      --theme-violet-light: #D1C4E9;  /* 아주 밝은 보라 (배경용) */
-      --theme-mint-muted: #80CBC4;    /* 차분한 민트 (포인트) */
+      /* 몬드리안/벤토 그리드 컬러 팔레트 */
+      --col-deep-violet: #4527A0;   /* 메인 보라 */
+      --col-muted-violet: #7E57C2;  /* 중간 보라 */
+      --col-dark-navy: #283593;     /* 아주 어두운 네이비 (포인트) */
+      --col-mint-muted: #4DB6AC;    /* 차분한 민트 */
+      --col-mint-deep: #00897B;     /* 진한 민트 */
+      --col-grey-bg: #eceff1;       /* 배경용 연한 회색 */
       
-      --bg-neutral: #F5F5F7;          /* 미색 배경 */
-      --text-main: #2c2c2c;
-      --text-sub: #555;
+      --text-main: #222;
+      --bg-neutral: #f5f5f7;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,219 +38,187 @@
 
     a { text-decoration: none; color: inherit; transition: 0.3s; }
     
-    /* [네비게이션] */
+    /* [네비게이션 - 심플하게 상단 고정] */
     nav {
-      background: rgba(255, 255, 255, 0.98);
-      padding: 0;
-      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
       position: sticky;
       top: 0;
-      z-index: 100;
-      border-bottom: 2px solid #eee; /* 경계선을 조금 더 명확하게 */
+      z-index: 1000;
+      padding: 0 20px;
     }
-
     .nav-container {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
     }
+    .nav-logo { font-weight: 900; font-size: 1.2rem; letter-spacing: -0.5px; }
+    .nav-links a { margin-left: 20px; font-size: 0.9rem; color: #666; font-weight: 500; }
+    .nav-links a:hover { color: var(--col-deep-violet); }
+    .nav-links a.active { color: var(--col-deep-violet); font-weight: 700; }
 
-    nav a { 
-      display: inline-block;
-      padding: 1rem 1.3rem;
-      font-weight: 500; 
-      font-size: 0.95rem;
-      color: #666;
-      position: relative;
-    }
 
-    /* 네비게이션 호버: 진한 보라색 텍스트 */
-    nav a:hover {
-      background-color: var(--theme-violet-light);
-      color: var(--theme-violet-deep);
-    }
-
-    nav a.active {
-      color: var(--theme-violet-deep);
-      font-weight: 800;
-      /* 밑줄 대신 상단에 두꺼운 보라색 바 */
-      border-top: 4px solid var(--theme-violet-deep); 
-      background-color: #fff;
-    }
-
-    /* [헤더 - 몬드리안 스타일 색면 구성] */
+    /* [메인 헤더] */
     header.main-header {
-      position: relative; /* 배경 그리드 배치를 위해 설정 */
       text-align: center;
-      padding: 6rem 1rem 5rem;
-      background: #fff; /* 기본 배경 */
-      overflow: hidden; /* 그리드가 튀어나가지 않게 */
-      border-bottom: 3px solid #333; /* 하단에 강한 선 */
+      padding: 5rem 1rem 3rem;
+      max-width: 800px;
+      margin: 0 auto;
     }
-
-    /* 몬드리안 스타일 배경 그리드 */
-    .mondrian-grid {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: 0; /* 텍스트 뒤로 보냄 */
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr; /* 비대칭 그리드 */
-      grid-template-rows: 1fr 1fr;
-      gap: 2px; /* 블록 사이 간격 (선 역할) */
-      background-color: #eee; /* 간격 색상 */
-      opacity: 0.4; /* 배경이 너무 강하지 않게 조절 */
-    }
-    /* 각 블록 색상 지정 */
-    .m-block-1 { background-color: var(--theme-violet-muted); grid-row: span 2; }
-    .m-block-2 { background-color: #fff; } /* 중앙은 밝게 */
-    .m-block-3 { background-color: var(--theme-mint-muted); }
-    .m-block-4 { background-color: var(--theme-violet-light); grid-column: 2 / span 2; }
-
-    /* 헤더 컨텐츠 (텍스트) - 배경 위로 올림 */
-    .header-content {
-      position: relative;
-      z-index: 1;
-    }
-
     header.main-header h1 { 
       font-size: 3.5rem; 
       margin-bottom: 0.5rem; 
       letter-spacing: -2px; 
-      color: #222;
+      color: #111;
       font-weight: 900;
+      line-height: 1.1;
     }
-    header.main-header p { color: #444; font-size: 1.15rem; margin-bottom: 1.5rem; font-weight: 500; }
+    header.main-header p { color: #555; font-size: 1.1rem; margin-bottom: 1rem; }
     
     .tag-pill {
       display: inline-block;
-      padding: 6px 20px;
-      background-color: var(--theme-violet-deep); /* 진한 보라 배경 */
-      color: #fff; /* 흰색 글씨 */
-      border-radius: 2px; /* 몬드리안 느낌 살려 둥근 모서리 줄임 */
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
+      padding: 5px 15px;
+      background-color: #eee;
+      color: #555;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
     }
 
-    /* [메인 레이아웃] */
+    /* [메인 컨텐츠 레이아웃] */
     main.wrap {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 60px 20px 80px;
+      padding: 20px 20px 100px;
     }
 
-    /* [소개 섹션] */
-    .intro-section {
-      margin-bottom: 60px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 40px;
-    }
-    .intro-section p {
-      font-size: 1.15rem;
-      color: #333;
-      max-width: 700px;
-      margin: 0 auto 20px;
-      word-break: keep-all;
-    }
-
-    /* [메뉴 카드 그리드] */
-    .grid-menu {
+    /* =========================================
+       [BENTO / MONDRIAN GRID NAVIGATION]
+       다양한 크기의 사각형 그리드 시스템
+       ========================================= */
+    .bento-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
+      /* 4열 그리드 (Desktop 기준) */
+      grid-template-columns: repeat(4, 1fr); 
+      /* 행 높이는 180px로 고정, 내용은 span으로 조절 */
+      grid-auto-rows: 180px; 
+      gap: 15px;
     }
 
-    .menu-card {
-      background: #fff;
-      padding: 35px;
-      /* 테두리를 명확하게 */
-      border: 2px solid #eee;
-      box-shadow: none; /* 그림자 제거하여 단정한 느낌 */
-      transition: all 0.3s ease;
+    /* 공통 카드 스타일 */
+    .b-card {
+      position: relative;
+      border-radius: 4px; /* 몬드리안 느낌 위해 둥근 정도 최소화 */
+      padding: 30px;
+      color: #fff;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100%;
-      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
 
-    /* 카드 호버: 테두리를 진한 보라색으로 변경 */
-    .menu-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--theme-violet-deep);
-      background-color: #fafafa;
-    }
-
-    /* 카드 상단 장식 바 (단색) */
-    .menu-card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      background-color: var(--theme-violet-muted); /* 차분한 보라 */
-      opacity: 0.5;
-      transition: 0.3s;
-    }
-    .menu-card:hover::after {
-      background-color: var(--theme-violet-deep); /* 호버시 진하게 */
-      opacity: 1;
-    }
-
-    .menu-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-      color: #333;
-      font-weight: 800;
+    /* [Interactive Hover Effect] */
+    .b-card:hover {
+      transform: translateY(-5px) scale(1.01); /* 살짝 떠오르며 커짐 */
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2); /* 그림자 진하게 */
+      z-index: 10;
     }
     
-    .menu-card:hover h3 { color: var(--theme-violet-deep); }
-
-    .menu-card p {
-      font-size: 0.95rem;
-      color: #666;
-      margin-bottom: 25px;
-      line-height: 1.6;
+    /* 호버 시 색상을 더 진하게(Darken) 처리하기 위한 가상 요소 */
+    .b-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0); /* 기본 투명 */
+      transition: background 0.4s;
+      z-index: 0;
+    }
+    .b-card:hover::before {
+      background: rgba(0,0,0,0.15); /* 검정색 틴트를 씌워 색을 진하게 만듦 */
     }
 
-    .menu-link {
-      font-weight: 700;
-      color: var(--theme-violet-deep);
-      display: inline-flex;
-      align-items: center;
-      margin-top: auto;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .menu-link::after {
-      content: '→';
-      margin-left: 5px;
-      transition: margin-left 0.2s;
-    }
-    .menu-card:hover .menu-link::after { margin-left: 10px; }
+    /* 텍스트 스타일 */
+    .b-content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+    .b-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 5px; }
+    .b-desc { font-size: 0.95rem; opacity: 0.9; font-weight: 400; line-height: 1.4; }
+    .b-arrow { align-self: flex-end; font-size: 1.5rem; opacity: 0; transform: translateX(-10px); transition: all 0.4s; }
+    
+    .b-card:hover .b-arrow { opacity: 1; transform: translateX(0); }
 
-    /* [푸터 - 진중한 어두운 톤] */
+
+    /* [개별 아이템 설정: 크기 및 색상] */
+
+    /* 1. Vitae (Main) - 가장 크게 (2열 x 2행) */
+    .item-vitae {
+      grid-column: span 2;
+      grid-row: span 2;
+      background-color: var(--col-deep-violet);
+    }
+    .item-vitae .b-title { font-size: 2.5rem; } /* 강조 */
+
+    /* 2. Publicus (Publications) - 세로로 길게 (1열 x 2행) */
+    .item-publicus {
+      grid-column: span 1;
+      grid-row: span 2;
+      background-color: var(--col-muted-violet);
+    }
+
+    /* 3. Lectio (Notes) - 가로로 길게 (2열 x 1행) */
+    .item-lectio {
+      grid-column: span 2;
+      grid-row: span 1;
+      background-color: var(--col-dark-navy);
+    }
+
+    /* 4. Ludus (Hobbies) - 작은 박스 (1열 x 1행) */
+    .item-ludus {
+      grid-column: span 1;
+      grid-row: span 1;
+      background-color: var(--col-mint-muted);
+      color: #fff; /* 민트 배경엔 흰 글씨 */
+    }
+
+    /* 5. Recordum (Gallery) - 작은 박스 (1열 x 1행) */
+    .item-recordum {
+      grid-column: span 1;
+      grid-row: span 1;
+      background-color: var(--col-mint-deep);
+    }
+
+
+    /* [푸터] */
     footer {
-      background: #222; /* 완전 검정에 가까운 회색 */
-      color: #bbb;
       text-align: center;
-      padding: 4rem 2rem;
-      margin-top: 6rem;
-      border-top: 4px solid var(--theme-violet-deep); /* 상단 포인트 바 */
+      padding: 3rem;
+      margin-top: 4rem;
+      border-top: 1px solid #ddd;
+      color: #888;
+      font-size: 0.85rem;
     }
-    footer a { color: #fff; margin: 0 10px; font-weight: bold;}
-    footer a:hover { color: var(--theme-violet-light); text-decoration: underline; }
 
-    /* 반응형 */
+    /* [반응형 - 모바일] */
     @media (max-width: 768px) {
-      header.main-header { padding: 4rem 1rem; }
       header.main-header h1 { font-size: 2.5rem; }
-      .nav-container { padding: 0 5px; }
-      nav a { padding: 0.8rem 0.5rem; font-size: 0.85rem; }
-      .mondrian-grid { opacity: 0.2; } /* 모바일에선 배경 더 연하게 */
+      
+      /* 모바일에서는 그리드를 1열로 단순화하거나 2열로 조정 */
+      .bento-grid {
+        grid-template-columns: 1fr; /* 1열 */
+        grid-auto-rows: minmax(150px, auto); /* 높이 자동 */
+      }
+      
+      /* 모든 아이템 span 초기화 (1칸씩 차지하게) */
+      .item-vitae, .item-publicus, .item-lectio, .item-ludus, .item-recordum {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+      /* Vitae만 조금 더 강조하고 싶다면 높이를 키움 */
+      .item-vitae { height: 250px; }
     }
   </style>
 </head>
@@ -258,96 +226,78 @@
 
   <nav>
     <div class="nav-container">
-      <a href="index.html" class="active">Main</a>
-      <a href="vitae.html">Vitae</a>
-      <a href="publicus.html">Publicus</a>
-      <a href="lectio.html">Lectio</a>
-      <a href="ludus.html">Ludus</a>
-      <a href="recordum.html">Recordum</a>
+      <div class="nav-logo">Jinwoo Lee</div>
+      <div class="nav-links">
+        <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+        <a href="mailto:atoree@kaist.ac.kr">Contact</a>
+      </div>
     </div>
   </nav>
 
   <header class="main-header">
-    <div class="mondrian-grid">
-        <div class="m-block-1"></div>
-        <div class="m-block-2"></div>
-        <div class="m-block-3"></div>
-        <div class="m-block-4"></div>
-    </div>
-    
-    <div class="header-content">
-        <h1>Jinwoo Lee</h1>
-        <p>Exploring the Intersection of Biology, AI, and Society</p>
-        <span class="tag-pill">@ KAIST</span>
-    </div>
+    <h1>Jinwoo Lee</h1>
+    <p>Exploring the Intersection of<br>Biological Sciences, AI, and Society</p>
+    <span class="tag-pill">@ KAIST</span>
   </header>
 
   <main class="wrap">
     
-    <section class="intro-section">
-      <p>
-        안녕하세요, <strong>KAIST 생명과학과 이진우</strong>입니다.<br>
-        과학기술과 인문사회학의 접점에서 새로운 가치를 고민합니다.
-      </p>
-      <p style="font-size: 1rem; color: #777; margin-top: 15px;">
-        Studying Biological Sciences &amp; Transdisciplinary Studies.<br>
-        Interested in AI Applications, Bio-Ethics, and Science Policy.
-      </p>
-    </section>
-
-    <div class="grid-menu">
+    <div class="bento-grid">
       
-      <a href="vitae.html" class="menu-card">
-        <div>
-          <h3>Vitae</h3>
-          <p>저의 학업 과정과 연구 경력, 그리고 다양한 활동의 발자취를 타임라인으로 정리했습니다.</p>
+      <a href="vitae.html" class="b-card item-vitae">
+        <div class="b-content">
+          <div>
+            <div class="b-title">Vitae</div>
+            <div class="b-desc">Educational Timeline &amp;<br>Research Experience</div>
+          </div>
+          <div class="b-arrow">→</div>
         </div>
-        <span class="menu-link">View CV</span>
       </a>
 
-      <a href="publicus.html" class="menu-card">
-        <div>
-          <h3>Publicus</h3>
-          <p>기고문, 에세이, 출판물 등 대중과 소통한 글과 생각들을 모았습니다.</p>
+      <a href="publicus.html" class="b-card item-publicus">
+        <div class="b-content">
+          <div>
+            <div class="b-title">Publicus</div>
+            <div class="b-desc">Articles, Essays,<br>&amp; Publications</div>
+          </div>
+          <div class="b-arrow">→</div>
         </div>
-        <span class="menu-link">Read Articles</span>
       </a>
 
-      <a href="lectio.html" class="menu-card">
-        <div>
-          <h3>Lectio</h3>
-          <p>제가 공부하며 정리한 강의 노트와 발표 자료, 세미나 기록 아카이브입니다.</p>
+      <a href="ludus.html" class="b-card item-ludus">
+        <div class="b-content">
+          <div>
+            <div class="b-title">Ludus</div>
+            <div class="b-desc">Hobbies &amp; Play</div>
+          </div>
+          <div class="b-arrow">→</div>
         </div>
-        <span class="menu-link">View Notes</span>
       </a>
 
-      <a href="ludus.html" class="menu-card">
-        <div>
-          <h3>Ludus</h3>
-          <p>연구 외의 즐거움. 게임, 취미, 그리고 개인적인 프로젝트들에 대한 기록입니다.</p>
+      <a href="lectio.html" class="b-card item-lectio">
+        <div class="b-content">
+          <div>
+            <div class="b-title">Lectio</div>
+            <div class="b-desc">Study Notes &amp; Seminar Archives</div>
+          </div>
+          <div class="b-arrow">→</div>
         </div>
-        <span class="menu-link">Explore Hobbies</span>
       </a>
 
-      <a href="recordum.html" class="menu-card">
-        <div>
-          <h3>Recordum</h3>
-          <p>순간의 기록들. 사진, 짧은 단상, 그리고 기억하고 싶은 장면들입니다.</p>
+      <a href="recordum.html" class="b-card item-recordum">
+        <div class="b-content">
+          <div>
+            <div class="b-title">Recordum</div>
+            <div class="b-desc">Gallery &amp; Records</div>
+          </div>
+          <div class="b-arrow">→</div>
         </div>
-        <span class="menu-link">See Gallery</span>
       </a>
 
-    </div>
-
-  </main>
+    </div> </main>
 
   <footer>
-    <div style="margin-bottom: 15px;">
-      <a href="https://github.com/yourusername" target="_blank">GitHub</a> |
-      <a href="mailto:atoree@kaist.ac.kr">Email</a> |
-      <a href="https://www.instagram.com/2jinw0_0/">Instagram</a>
-    </div>
-    <p style="font-size: 0.85rem; color: #777;">© 2026 Jinwoo Lee. All rights reserved.</p>
+    <p>© 2026 Jinwoo Lee. All rights reserved.</p>
   </footer>
 
 </body>
