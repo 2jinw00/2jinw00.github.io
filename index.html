@@ -12,19 +12,16 @@
   <style>
     /* [공통 변수] */
     :root {
-      --kaist-blue: #01438F;
-      --ksa-blue: #1E2083;
-
-      /* 몬드리안/벤토 그리드 컬러 팔레트 */
-      --col-deep-violet: #4527A0;   /* 메인 보라 */
-      --col-muted-violet: #7E57C2;  /* 중간 보라 */
-      --col-dark-navy: #283593;     /* 아주 어두운 네이비 (포인트) */
-      --col-mint-muted: #4DB6AC;    /* 차분한 민트 */
-      --col-mint-deep: #00897B;     /* 진한 민트 */
-      --col-grey-bg: #eceff1;       /* 배경용 연한 회색 */
+      /* 몬드리안 팔레트 (진중한 톤) */
+      --col-deep-violet: #4527A0;   /* 메인 (Vitae) */
+      --col-muted-violet: #7E57C2;  /* 서브 (Publicus) */
+      --col-dark-navy: #283593;     /* 포인트 (Lectio) */
+      --col-mint-muted: #4DB6AC;    /* 포인트 (Ludus) */
+      --col-mint-deep: #00695C;     /* 포인트 (Recordum) */
       
+      --col-white-block: #ffffff;   /* 몬드리안 빈 공간 */
+      --bg-neutral: #f4f4f6;        /* 전체 배경 (흰 블록과 구분을 위해 약간 어둡게) */
       --text-main: #222;
-      --bg-neutral: #f5f5f7;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,7 +35,7 @@
 
     a { text-decoration: none; color: inherit; transition: 0.3s; }
     
-    /* [네비게이션 - 심플하게 상단 고정] */
+    /* [네비게이션] */
     nav {
       background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(10px);
@@ -59,10 +56,8 @@
     .nav-logo { font-weight: 900; font-size: 1.2rem; letter-spacing: -0.5px; }
     .nav-links a { margin-left: 20px; font-size: 0.9rem; color: #666; font-weight: 500; }
     .nav-links a:hover { color: var(--col-deep-violet); }
-    .nav-links a.active { color: var(--col-deep-violet); font-weight: 700; }
 
-
-    /* [메인 헤더] */
+    /* [헤더] */
     header.main-header {
       text-align: center;
       padding: 5rem 1rem 3rem;
@@ -73,23 +68,22 @@
       font-size: 3.5rem; 
       margin-bottom: 0.5rem; 
       letter-spacing: -2px; 
-      color: #111;
+      color: #111; 
       font-weight: 900;
-      line-height: 1.1;
     }
     header.main-header p { color: #555; font-size: 1.1rem; margin-bottom: 1rem; }
     
     .tag-pill {
       display: inline-block;
       padding: 5px 15px;
-      background-color: #eee;
-      color: #555;
+      background-color: #ddd;
+      color: #444;
       border-radius: 20px;
       font-weight: 600;
       font-size: 0.85rem;
     }
 
-    /* [메인 컨텐츠 레이아웃] */
+    /* [메인 컨텐츠] */
     main.wrap {
       max-width: 1000px;
       margin: 0 auto;
@@ -97,94 +91,116 @@
     }
 
     /* =========================================
-       [BENTO / MONDRIAN GRID NAVIGATION]
-       다양한 크기의 사각형 그리드 시스템
+       [MONDRIAN BENTO GRID]
        ========================================= */
     .bento-grid {
       display: grid;
-      /* 4열 그리드 (Desktop 기준) */
+      /* 4열 그리드 */
       grid-template-columns: repeat(4, 1fr); 
-      /* 행 높이는 180px로 고정, 내용은 span으로 조절 */
+      /* 기본 행 높이 */
       grid-auto-rows: 180px; 
-      gap: 15px;
+      gap: 15px; /* 블록 사이 간격 */
     }
 
     /* 공통 카드 스타일 */
     .b-card {
       position: relative;
-      border-radius: 4px; /* 몬드리안 느낌 위해 둥근 정도 최소화 */
+      border-radius: 2px; /* 몬드리안 느낌: 거의 직각 */
       padding: 30px;
-      color: #fff;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03); /* 아주 옅은 그림자 */
     }
 
-    /* [Interactive Hover Effect] */
-    .b-card:hover {
-      transform: translateY(-5px) scale(1.01); /* 살짝 떠오르며 커짐 */
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2); /* 그림자 진하게 */
+    /* 1. Interactive Cards (색상 있는 링크 카드) */
+    .link-card {
+      color: #fff;
+      cursor: pointer;
+    }
+    
+    .link-card:hover {
+      transform: translateY(-5px) scale(1.01);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
       z-index: 10;
     }
     
-    /* 호버 시 색상을 더 진하게(Darken) 처리하기 위한 가상 요소 */
-    .b-card::before {
+    /* 호버 시 색상 진하게 (Darken Filter) */
+    .link-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0); /* 기본 투명 */
+      background: rgba(0,0,0,0);
       transition: background 0.4s;
       z-index: 0;
     }
-    .b-card:hover::before {
-      background: rgba(0,0,0,0.15); /* 검정색 틴트를 씌워 색을 진하게 만듦 */
+    .link-card:hover::before { background: rgba(0,0,0,0.15); }
+
+    /* 2. Empty Cards (흰색 빈 공간) */
+    .empty-card {
+      background-color: var(--col-white-block);
+      /* 빈 공간임을 나타내기 위한 미세한 스타일 */
+      border: 1px solid #eee; 
     }
+    /* 모바일에서는 너무 많은 빈 공간이 방해될 수 있으므로 숨김 처리 가능 (선택 사항) */
+
 
     /* 텍스트 스타일 */
     .b-content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
     .b-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 5px; }
     .b-desc { font-size: 0.95rem; opacity: 0.9; font-weight: 400; line-height: 1.4; }
     .b-arrow { align-self: flex-end; font-size: 1.5rem; opacity: 0; transform: translateX(-10px); transition: all 0.4s; }
-    
-    .b-card:hover .b-arrow { opacity: 1; transform: translateX(0); }
+    .link-card:hover .b-arrow { opacity: 1; transform: translateX(0); }
 
 
-    /* [개별 아이템 설정: 크기 및 색상] */
+    /* [GRID PLACEMENT & COLORS] */
 
-    /* 1. Vitae (Main) - 가장 크게 (2열 x 2행) */
+    /* Row 1 */
+    /* Vitae: 2x2 Big Block */
     .item-vitae {
       grid-column: span 2;
       grid-row: span 2;
       background-color: var(--col-deep-violet);
     }
-    .item-vitae .b-title { font-size: 2.5rem; } /* 강조 */
+    .item-vitae .b-title { font-size: 2.5rem; }
 
-    /* 2. Publicus (Publications) - 세로로 길게 (1열 x 2행) */
+    /* Publicus: 1x2 Tall Block */
     .item-publicus {
       grid-column: span 1;
       grid-row: span 2;
       background-color: var(--col-muted-violet);
     }
 
-    /* 3. Lectio (Notes) - 가로로 길게 (2열 x 1행) */
+    /* Empty 1: 1x1 White Block (Row 1, Col 4) */
+    .item-empty-1 {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    /* Ludus: 1x1 Mint Block (Row 2, Col 4) */
+    .item-ludus {
+      grid-column: span 1;
+      grid-row: span 1;
+      background-color: var(--col-mint-muted);
+    }
+
+    /* Row 3 */
+    /* Empty 2: 1x1 White Block (Row 3, Col 1) */
+    .item-empty-2 {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    /* Lectio: 2x1 Wide Block (Row 3, Col 2-3) */
     .item-lectio {
       grid-column: span 2;
       grid-row: span 1;
       background-color: var(--col-dark-navy);
     }
 
-    /* 4. Ludus (Hobbies) - 작은 박스 (1열 x 1행) */
-    .item-ludus {
-      grid-column: span 1;
-      grid-row: span 1;
-      background-color: var(--col-mint-muted);
-      color: #fff; /* 민트 배경엔 흰 글씨 */
-    }
-
-    /* 5. Recordum (Gallery) - 작은 박스 (1열 x 1행) */
+    /* Recordum: 1x1 Deep Mint (Row 3, Col 4) */
     .item-recordum {
       grid-column: span 1;
       grid-row: span 1;
@@ -197,27 +213,28 @@
       text-align: center;
       padding: 3rem;
       margin-top: 4rem;
-      border-top: 1px solid #ddd;
       color: #888;
       font-size: 0.85rem;
     }
 
-    /* [반응형 - 모바일] */
+    /* [반응형] */
     @media (max-width: 768px) {
       header.main-header h1 { font-size: 2.5rem; }
       
-      /* 모바일에서는 그리드를 1열로 단순화하거나 2열로 조정 */
       .bento-grid {
-        grid-template-columns: 1fr; /* 1열 */
-        grid-auto-rows: minmax(150px, auto); /* 높이 자동 */
+        grid-template-columns: 1fr; /* 1열로 변경 */
+        grid-auto-rows: minmax(150px, auto);
       }
       
-      /* 모든 아이템 span 초기화 (1칸씩 차지하게) */
-      .item-vitae, .item-publicus, .item-lectio, .item-ludus, .item-recordum {
+      /* 모바일에서 모든 아이템 1칸 차지 */
+      .item-vitae, .item-publicus, .item-lectio, .item-ludus, .item-recordum, .item-empty-1, .item-empty-2 {
         grid-column: span 1;
         grid-row: span 1;
       }
-      /* Vitae만 조금 더 강조하고 싶다면 높이를 키움 */
+      
+      /* 모바일에서 빈 블록은 너무 길어지니 숨기기 */
+      .empty-card { display: none; }
+      
       .item-vitae { height: 250px; }
     }
   </style>
@@ -244,7 +261,7 @@
     
     <div class="bento-grid">
       
-      <a href="vitae.html" class="b-card item-vitae">
+      <a href="vitae.html" class="b-card link-card item-vitae">
         <div class="b-content">
           <div>
             <div class="b-title">Vitae</div>
@@ -254,7 +271,7 @@
         </div>
       </a>
 
-      <a href="publicus.html" class="b-card item-publicus">
+      <a href="publicus.html" class="b-card link-card item-publicus">
         <div class="b-content">
           <div>
             <div class="b-title">Publicus</div>
@@ -264,7 +281,10 @@
         </div>
       </a>
 
-      <a href="ludus.html" class="b-card item-ludus">
+      <div class="b-card empty-card item-empty-1">
+        </div>
+
+      <a href="ludus.html" class="b-card link-card item-ludus">
         <div class="b-content">
           <div>
             <div class="b-title">Ludus</div>
@@ -274,17 +294,20 @@
         </div>
       </a>
 
-      <a href="lectio.html" class="b-card item-lectio">
+      <div class="b-card empty-card item-empty-2">
+         </div>
+
+      <a href="lectio.html" class="b-card link-card item-lectio">
         <div class="b-content">
           <div>
             <div class="b-title">Lectio</div>
-            <div class="b-desc">Study Notes &amp; Seminar Archives</div>
+            <div class="b-desc">Study Notes &amp; Archives</div>
           </div>
           <div class="b-arrow">→</div>
         </div>
       </a>
 
-      <a href="recordum.html" class="b-card item-recordum">
+      <a href="recordum.html" class="b-card link-card item-recordum">
         <div class="b-content">
           <div>
             <div class="b-title">Recordum</div>
